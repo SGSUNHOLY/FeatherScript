@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to ZeroScript Free are documented here.
+All notable changes to FeatherScript are documented here. Entries before 2.0.0 were written for its upstream project, ZeroScript Free, and keep that name.
 
 ## Honest status, real handoff files and the stall breaker — 2026-11-05
 

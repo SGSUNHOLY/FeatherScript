@@ -1,6 +1,8 @@
 # FeatherScript 2.0.1 - Free AI Agent for Roblox Studio
 
-![GitHub stars](https://img.shields.io/github/stars/sebattfg/FeatherScript-Free?style=social)
+> **This is a fork.** FeatherScript continues [ZeroScript Free by sebattfg](https://github.com/sebattfg/ZeroScript-Free) under the same GPL-3.0 license, with the original author's links and credits left in place. Everything below is upstream's description; what this fork changes is listed in [CHANGELOG.md](CHANGELOG.md).
+
+![GitHub stars](https://img.shields.io/github/stars/sebattfg/ZeroScript-Free?style=social)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS-lightgrey)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue)
 
