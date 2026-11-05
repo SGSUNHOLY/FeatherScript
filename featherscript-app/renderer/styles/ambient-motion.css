@@ -1,0 +1,25 @@
+/* Two compositor-driven layers; foreground content and custom photos stay steady. */
+@media(prefers-reduced-motion:no-preference){
+ body[data-view="app"][data-motion="full"] .app-ambient::before{animation:fs-ambient-drift 26s cubic-bezier(.45,0,.55,1) infinite alternate;transform-origin:center;}
+ body[data-view="app"][data-motion="full"]:not(.has-custom-scene) .app-ambient::before{opacity:.28;}
+ body[data-view="app"][data-motion="full"][data-theme]:not(.has-custom-scene) .app-ambient::after{
+   animation:fs-scene-drift 16s ease-in-out -5s infinite alternate;
+   transform-origin:center bottom;
+ }
+}
+@keyframes fs-ambient-drift{from{transform:translate3d(-1.5%,-1%,0) scale(1.025);}to{transform:translate3d(2%,1.5%,0) scale(1.065);}}
+/* Percentage overscan keeps the scene covering the viewport throughout the pan. */
+@keyframes fs-scene-drift{
+ from{transform:translate3d(-2.5%,0,0) scale(1.075);}
+ to{transform:translate3d(2.5%,-1.2%,0) scale(1.1);}
+}
+/* Let the scene remain visible through large surfaces in every layout. */
+body[data-view="app"] .panel{background-color:color-mix(in srgb,var(--panel-solid) 76%,transparent);}
+body[data-view="app"] .launch-hero{background-color:color-mix(in srgb,var(--panel-solid) 72%,transparent);}
+body[data-fx-paused="true"] .app-ambient::before,
+body[data-fx-paused="true"] .app-ambient::after{animation-play-state:paused!important;}
+body:is([data-motion="off"],[data-motion="reduced"]) .app-ambient::before,
+body:is([data-motion="off"],[data-motion="reduced"]) .app-ambient::after{animation:none!important;transform:none;}
+@media(prefers-reduced-motion:reduce){
+ body .app-ambient::before,body .app-ambient::after{animation:none!important;transform:none;}
+}

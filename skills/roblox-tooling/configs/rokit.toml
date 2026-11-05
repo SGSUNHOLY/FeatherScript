@@ -1,0 +1,7 @@
+# Pins the tools this project uses. Install all of them with: rokit install
+# Versions match the Roblox toolchain guide; bump them deliberately, after a test run.
+[tools]
+rojo = "rojo-rbx/rojo@7.4.4"
+selene = "Kampfkarren/selene@0.27.1"
+stylua = "JohnnyMorganz/StyLua@0.20.0"
+wally = "UpliftGames/wally@0.3.2"

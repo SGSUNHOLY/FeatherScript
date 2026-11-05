@@ -1,0 +1,629 @@
+{
+  "manifest_version": 3,
+  "name": "FeatherScript - Roblox Studio Agent",
+  "version": "2.0.1",
+  "description": "FeatherScript connects supported AI chats to Roblox Studio through a local bridge.",
+  "permissions": [
+    "storage",
+    "alarms",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "https://chat.deepseek.com/*",
+    "https://deepseek.com/*",
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*",
+    "https://gemini.google.com/*",
+    "https://www.kimi.ai/*",
+    "https://kimi.ai/*",
+    "https://chat.z.ai/*",
+    "https://chat.qwen.ai/*",
+    "https://arena.ai/*",
+    "https://www.meta.ai/*",
+    "https://meta.ai/*",
+    "https://c.vani.ai/*",
+    "https://www.notion.so/*",
+    "https://notion.so/*",
+    "https://app.notion.com/*",
+    "https://aistudio.xiaomimimo.com/*",
+    "https://www.genspark.ai/*",
+    "https://genspark.ai/*",
+    "http://127.0.0.1/*",
+    "ws://127.0.0.1/*",
+    "https://aistudio.google.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "assets/feather-mark.png",
+    "48": "assets/feather-mark.png",
+    "128": "assets/feather-mark.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "FeatherScript",
+    "default_icon": {
+      "16": "assets/feather-mark.png",
+      "48": "assets/feather-mark.png",
+      "128": "assets/feather-mark.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.deepseek.com/*",
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://gemini.google.com/*",
+        "https://www.kimi.ai/*",
+        "https://kimi.ai/*",
+        "https://chat.z.ai/*",
+        "https://chat.qwen.ai/*",
+        "https://arena.ai/*",
+        "https://www.meta.ai/*",
+        "https://meta.ai/*",
+        "https://c.vani.ai/*",
+        "https://www.notion.so/*",
+        "https://notion.so/*",
+        "https://app.notion.com/*",
+        "https://aistudio.xiaomimimo.com/*",
+        "https://www.genspark.ai/*",
+        "https://genspark.ai/*",
+        "https://aistudio.google.com/*"
+      ],
+      "js": [
+        "core/keepawake.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://chat.deepseek.com/*"
+      ],
+      "js": [
+        "core/theme-presets.js",
+        "core/theme-motion.js",
+        "core/theme.js",
+        "core/config.js",
+        "core/parser.js",
+        "providers/deepseek.js",
+        "core/commands.js",
+        "core/provider-status.js",
+        "core/task-policy.js",
+        "core/cowork.js",
+        "core/audio-ui.js",
+        "core/projects.js",
+        "core/projects-ui.js",
+        "core/workflow.js",
+        "core/server-status.js",
+        "core/main.js"
+      ],
+      "css": [
+        "overlay.css",
+        "theme-presets.css",
+        "controller-polish.css",
+        "workflow.css",
+        "controller-layout.css",
+        "theme-identities.css",
+        "controller-skin.css",
+        "theme-motion.css",
+        "audio.css",
+        "projects.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "js": [
+        "providers/chatgpt-cm.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "js": [
+        "core/dom-runtime.js",
+        "core/theme-presets.js",
+        "core/theme-motion.js",
+        "core/theme.js",
+        "core/config.js",
+        "core/parser.js",
+        "providers/chatgpt.js",
+        "core/commands.js",
+        "core/provider-status.js",
+        "core/task-policy.js",
+        "core/cowork.js",
+        "core/audio-ui.js",
+        "core/projects.js",
+        "core/projects-ui.js",
+        "core/workflow.js",
+        "core/server-status.js",
+        "core/main.js"
+      ],
+      "css": [
+        "overlay.css",
+        "theme-presets.css",
+        "controller-polish.css",
+        "workflow.css",
+        "controller-layout.css",
+        "theme-identities.css",
+        "controller-skin.css",
+        "theme-motion.css",
+        "audio.css",
+        "projects.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://gemini.google.com/*"
+      ],
+      "js": [
+        "core/theme-presets.js",
+        "core/theme-motion.js",
+        "core/theme.js",
+        "core/config.js",
+        "core/parser.js",
+        "providers/gemini.js",
+        "core/commands.js",
+        "core/provider-status.js",
+        "core/task-policy.js",
+        "core/cowork.js",
+        "core/audio-ui.js",
+        "core/projects.js",
+        "core/projects-ui.js",
+        "core/workflow.js",
+        "core/server-status.js",
+        "core/main.js"
+      ],
+      "css": [
+        "overlay.css",
+        "theme-presets.css",
+        "controller-polish.css",
+        "workflow.css",
+        "controller-layout.css",
+        "theme-identities.css",
+        "controller-skin.css",
+        "theme-motion.css",
+        "audio.css",
+        "projects.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.kimi.ai/*",
+        "https://kimi.ai/*"
+      ],
+      "js": [
+        "core/theme-presets.js",
+        "core/theme-motion.js",
+        "core/theme.js",
+        "core/config.js",
+        "core/parser.js",
+        "providers/kimi.js",
+        "core/commands.js",
+        "core/provider-status.js",
+        "core/task-policy.js",
+        "core/cowork.js",
+        "core/audio-ui.js",
+        "core/projects.js",
+        "core/projects-ui.js",
+        "core/workflow.js",
+        "core/server-status.js",
+        "core/main.js"
+      ],
+      "css": [
+        "overlay.css",
+        "theme-presets.css",
+        "controller-polish.css",
+        "workflow.css",
+        "controller-layout.css",
+        "theme-identities.css",
+        "controller-skin.css",
+        "theme-motion.css",
+        "audio.css",
+        "projects.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://chat.z.ai/*"
+      ],
+      "js": [
+        "core/theme-presets.js",
+        "core/theme-motion.js",
+        "core/theme.js",
+        "core/config.js",
+        "core/parser.js",
+        "providers/glm.js",
+        "core/commands.js",
+        "core/provider-status.js",
+        "core/task-policy.js",
+        "core/cowork.js",
+        "core/audio-ui.js",
+        "core/projects.js",
+        "core/projects-ui.js",
+        "core/workflow.js",
+        "core/server-status.js",
+        "core/main.js"
+      ],
+      "css": [
+        "overlay.css",
+        "theme-presets.css",
+        "controller-polish.css",
+        "workflow.css",
+        "controller-layout.css",
+        "theme-identities.css",
+        "controller-skin.css",
+        "theme-motion.css",
+        "audio.css",
+        "projects.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://arena.ai/*"
+      ],
+      "js": [
+        "core/theme-presets.js",
+        "core/theme-motion.js",
+        "core/theme.js",
+        "core/config.js",
+        "core/parser.js",
+        "providers/arena.js",
+        "core/commands.js",
+        "core/provider-status.js",
+        "core/task-policy.js",
+        "core/cowork.js",
+        "core/audio-ui.js",
+        "core/projects.js",
+        "core/projects-ui.js",
+        "core/workflow.js",
+        "core/server-status.js",
+        "core/main.js"
+      ],
+      "css": [
+        "overlay.css",
+        "theme-presets.css",
+        "controller-polish.css",
+        "workflow.css",
+        "controller-layout.css",
+        "theme-identities.css",
+        "controller-skin.css",
+        "theme-motion.css",
+        "audio.css",
+        "projects.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.meta.ai/*",
+        "https://meta.ai/*"
+      ],
+      "js": [
+        "core/theme-presets.js",
+        "core/theme-motion.js",
+        "core/theme.js",
+        "core/config.js",
+        "core/parser.js",
+        "providers/meta.js",
+        "core/commands.js",
+        "core/provider-status.js",
+        "core/task-policy.js",
+        "core/cowork.js",
+        "core/audio-ui.js",
+        "core/projects.js",
+        "core/projects-ui.js",
+        "core/workflow.js",
+        "core/server-status.js",
+        "core/main.js"
+      ],
+      "css": [
+        "overlay.css",
+        "theme-presets.css",
+        "controller-polish.css",
+        "workflow.css",
+        "controller-layout.css",
+        "theme-identities.css",
+        "controller-skin.css",
+        "theme-motion.css",
+        "audio.css",
+        "projects.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://chat.qwen.ai/*"
+      ],
+      "js": [
+        "providers/qwen-net.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://chat.qwen.ai/*"
+      ],
+      "js": [
+        "core/theme-presets.js",
+        "core/theme-motion.js",
+        "core/theme.js",
+        "core/config.js",
+        "core/parser.js",
+        "providers/qwen.js",
+        "core/commands.js",
+        "core/provider-status.js",
+        "core/task-policy.js",
+        "core/cowork.js",
+        "core/audio-ui.js",
+        "core/projects.js",
+        "core/projects-ui.js",
+        "core/workflow.js",
+        "core/server-status.js",
+        "core/main.js"
+      ],
+      "css": [
+        "overlay.css",
+        "theme-presets.css",
+        "controller-polish.css",
+        "workflow.css",
+        "controller-layout.css",
+        "theme-identities.css",
+        "controller-skin.css",
+        "theme-motion.css",
+        "audio.css",
+        "projects.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://c.vani.ai/*"
+      ],
+      "js": [
+        "providers/vani-net.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://c.vani.ai/*"
+      ],
+      "js": [
+        "core/theme-presets.js",
+        "core/theme-motion.js",
+        "core/theme.js",
+        "core/config.js",
+        "core/parser.js",
+        "providers/vani.js",
+        "core/commands.js",
+        "core/provider-status.js",
+        "core/task-policy.js",
+        "core/cowork.js",
+        "core/audio-ui.js",
+        "core/projects.js",
+        "core/projects-ui.js",
+        "core/workflow.js",
+        "core/server-status.js",
+        "core/main.js"
+      ],
+      "css": [
+        "overlay.css",
+        "theme-presets.css",
+        "controller-polish.css",
+        "workflow.css",
+        "controller-layout.css",
+        "theme-identities.css",
+        "controller-skin.css",
+        "theme-motion.css",
+        "audio.css",
+        "projects.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.notion.so/*",
+        "https://notion.so/*",
+        "https://app.notion.com/*"
+      ],
+      "js": [
+        "core/theme-presets.js",
+        "core/theme-motion.js",
+        "core/theme.js",
+        "core/config.js",
+        "core/parser.js",
+        "providers/notion.js",
+        "core/commands.js",
+        "core/provider-status.js",
+        "core/task-policy.js",
+        "core/cowork.js",
+        "core/audio-ui.js",
+        "core/projects.js",
+        "core/projects-ui.js",
+        "core/workflow.js",
+        "core/server-status.js",
+        "core/main.js"
+      ],
+      "css": [
+        "overlay.css",
+        "theme-presets.css",
+        "controller-polish.css",
+        "workflow.css",
+        "controller-layout.css",
+        "theme-identities.css",
+        "controller-skin.css",
+        "theme-motion.css",
+        "audio.css",
+        "projects.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://aistudio.xiaomimimo.com/*"
+      ],
+      "js": [
+        "providers/mimo-net.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://aistudio.xiaomimimo.com/*"
+      ],
+      "js": [
+        "core/theme-presets.js",
+        "core/theme-motion.js",
+        "core/theme.js",
+        "core/config.js",
+        "core/parser.js",
+        "providers/mimo.js",
+        "core/commands.js",
+        "core/provider-status.js",
+        "core/task-policy.js",
+        "core/cowork.js",
+        "core/audio-ui.js",
+        "core/projects.js",
+        "core/projects-ui.js",
+        "core/workflow.js",
+        "core/server-status.js",
+        "core/main.js"
+      ],
+      "css": [
+        "overlay.css",
+        "theme-presets.css",
+        "controller-polish.css",
+        "workflow.css",
+        "controller-layout.css",
+        "theme-identities.css",
+        "controller-skin.css",
+        "theme-motion.css",
+        "audio.css",
+        "projects.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.genspark.ai/*",
+        "https://genspark.ai/*"
+      ],
+      "js": [
+        "core/theme-presets.js",
+        "core/theme-motion.js",
+        "core/theme.js",
+        "core/dom-runtime.js",
+        "core/config.js",
+        "core/parser.js",
+        "providers/genspark.js",
+        "core/commands.js",
+        "core/provider-status.js",
+        "core/task-policy.js",
+        "core/cowork.js",
+        "core/audio-ui.js",
+        "core/projects.js",
+        "core/projects-ui.js",
+        "core/workflow.js",
+        "core/server-status.js",
+        "core/main.js"
+      ],
+      "css": [
+        "overlay.css",
+        "theme-presets.css",
+        "controller-polish.css",
+        "workflow.css",
+        "controller-layout.css",
+        "theme-identities.css",
+        "controller-skin.css",
+        "theme-motion.css",
+        "audio.css",
+        "projects.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://aistudio.google.com/*"
+      ],
+      "js": [
+        "core/theme-presets.js",
+        "core/theme-motion.js",
+        "core/theme.js",
+        "core/dom-runtime.js",
+        "core/config.js",
+        "core/parser.js",
+        "providers/aistudio.js",
+        "core/commands.js",
+        "core/provider-status.js",
+        "core/task-policy.js",
+        "core/cowork.js",
+        "core/audio-ui.js",
+        "core/projects.js",
+        "core/projects-ui.js",
+        "core/workflow.js",
+        "core/server-status.js",
+        "core/main.js"
+      ],
+      "css": [
+        "overlay.css",
+        "theme-presets.css",
+        "controller-polish.css",
+        "workflow.css",
+        "controller-layout.css",
+        "theme-identities.css",
+        "controller-skin.css",
+        "theme-motion.css",
+        "audio.css",
+        "projects.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://chat.deepseek.com/*",
+        "https://deepseek.com/*",
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://gemini.google.com/*",
+        "https://www.kimi.ai/*",
+        "https://kimi.ai/*",
+        "https://chat.z.ai/*",
+        "https://chat.qwen.ai/*",
+        "https://arena.ai/*",
+        "https://www.meta.ai/*",
+        "https://meta.ai/*",
+        "https://c.vani.ai/*",
+        "https://www.notion.so/*",
+        "https://notion.so/*",
+        "https://app.notion.com/*",
+        "https://aistudio.xiaomimimo.com/*",
+        "https://www.genspark.ai/*",
+        "https://genspark.ai/*",
+        "https://aistudio.google.com/*"
+      ],
+      "resources": [
+        "assets/themes/*.svg"
+      ]
+    }
+  ]
+}

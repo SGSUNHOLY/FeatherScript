@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src ws://127.0.0.1:17613; font-src 'self'">
+<title>FeatherScript</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="theme-presets.css">
+<link rel="stylesheet" href="styles/profiles-vault.css">
+<link rel="stylesheet" href="styles/projects.css">
+<link rel="stylesheet" href="styles/startup.css">
+<link rel="stylesheet" href="styles/navigation.css">
+<link rel="stylesheet" href="styles/overview.css">
+<link rel="stylesheet" href="styles/motion.css">
+<link rel="stylesheet" href="styles/feel.css">
+<link rel="stylesheet" href="styles/appearance.css">
+<link rel="stylesheet" href="styles/polish.css">
+<link rel="stylesheet" href="styles/layouts.css">
+<link rel="stylesheet" href="styles/refinements.css">
+<link rel="stylesheet" href="styles/studio-finish.css">
+<link rel="stylesheet" href="styles/guides.css">
+<link rel="stylesheet" href="styles/workspace-finish.css">
+<link rel="stylesheet" href="styles/native-backdrop.css">
+<link rel="stylesheet" href="styles/motion-finish.css">
+<link rel="stylesheet" href="theme-identities.css">
+<link rel="stylesheet" href="styles/ambient-motion.css">
+<link rel="stylesheet" href="../../featherscript-extension/theme-motion.css">
+</head>
+<body data-view="boot" data-theme="default" data-version="2.0.1">
+
+<svg class="sprite" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-memory" viewBox="0 0 24 24"><path d="M9 4h6v3h3v3h-3v4h3v3h-3v3H9v-3H6v-3h3v-4H6V7h3z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5M9 8h3"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M2.8 12h2.6M18.6 12h2.6M4.9 19.1l1.9-1.9M17.2 6.8l1.9-1.9"/></symbol>
+  <symbol id="i-connect" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6" rx="2"/><rect x="15" y="15" width="6" height="6" rx="2"/><path d="M9 6h5a4 4 0 0 1 4 4v5M6 9v5a4 4 0 0 0 4 4h5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.4-5.7M20 4v4h-4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a1 1 0 0 1 1-1h5l2 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></symbol>
+  <symbol id="i-min" viewBox="0 0 12 12"><path d="M3 6h6"/></symbol>
+  <symbol id="i-max" viewBox="0 0 12 12"><rect x="3" y="3" width="6" height="6" rx="1"/></symbol>
+  <symbol id="i-close" viewBox="0 0 12 12"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9.5h3l4.5-3.5v12L7 14.5H4z"/><path d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9.5h3l4.5-3.5v12L7 14.5H4z"/><path d="M15.5 9.5l5 5M20.5 9.5l-5 5"/></symbol>
+</svg>
+
+<div class="chrome">
+  <div class="chrome-drag"></div>
+  <div class="chrome-controls">
+    <button class="chrome-btn" id="win-min" title="Minimize" aria-label="Minimize"><svg><use href="#i-min"/></svg></button>
+    <button class="chrome-btn" id="win-max" title="Maximize" aria-label="Maximize"><svg><use href="#i-max"/></svg></button>
+    <button class="chrome-btn chrome-close" id="win-close" title="Close" aria-label="Close"><svg><use href="#i-close"/></svg></button>
+  </div>
+</div>
+
+
+<section class="boot-screen" id="boot-screen" aria-label="Loading FeatherScript" aria-busy="true">
+  <div class="boot-grain" aria-hidden="true"></div>
+  <div class="boot-content">
+    <span class="boot-kicker">A little space to build</span>
+    <div class="boot-emblem" aria-hidden="true"><span class="boot-orbit"></span><span class="boot-feather"></span></div>
+    <h1>FeatherScript<span class="boot-title-dot">.</span></h1>
+    <p class="boot-copy">Your ideas, ready to take flight.</p>
+    <div class="boot-track" aria-hidden="true"><span></span></div>
+    <p class="boot-status" id="boot-status" role="status" aria-live="polite">Opening your workspace…</p>
+    <div class="boot-stages" aria-hidden="true"><span id="boot-profile-stage">Profile</span><i></i><span id="boot-memory-stage">Memory</span><i></i><span id="boot-workspace-stage">Workspace</span></div>
+    <button class="ghost-btn" id="boot-retry" type="button" hidden>Try again</button>
+  </div>
+  <div class="boot-foot"><span>LOCAL FIRST · v2.0.1</span><span>MADE FOR YOUR NEXT IDEA</span></div>
+</section>
+
+<!-- ───────────────────────── app ───────────────────────── -->
+<section class="app-view" id="app">
+  <div class="app-ambient" aria-hidden="true"></div>
+  <aside class="sidebar">
+    <div class="side-brand">
+      <span class="side-mark" aria-hidden="true"></span>
+      <span class="side-word">FeatherScript</span>
+    </div>
+
+    <p class="nav-caption">Your workspace <span>FS / 01</span></p>
+    <nav aria-label="Workspace navigation" class="side-nav" id="side-nav">
+      <span class="nav-ink" id="nav-ink" aria-hidden="true"></span>
+      <button class="nav-item is-active" data-page="overview"><span class="nav-symbol"><svg><use href="#i-home"/></svg></span><span class="nav-copy"><b>Overview</b><small>At a glance</small></span><span class="nav-index" aria-hidden="true">01</span></button>
+      <button class="nav-item" data-page="providers"><span class="nav-symbol"><svg><use href="#i-spark"/></svg></span><span class="nav-copy"><b>Providers</b><small>Chats & websites</small></span><span class="nav-index" aria-hidden="true">02</span></button>
+      <button class="nav-item" data-page="memory"><span class="nav-symbol"><svg><use href="#i-memory"/></svg></span><span class="nav-copy"><b>Projects</b><small>Memory & handoffs</small></span><span class="nav-index" aria-hidden="true">03</span></button>
+      <button class="nav-item" data-page="skills"><span class="nav-symbol"><svg><use href="#i-spark"/></svg></span><span class="nav-copy"><b>Skills</b><small>Your playbook</small></span><span class="nav-index" aria-hidden="true">04</span></button>
+      <button class="nav-item" data-page="notes"><span class="nav-symbol"><svg><use href="#i-note"/></svg></span><span class="nav-copy"><b>Notes</b><small>Ideas & snippets</small></span><span class="nav-index" aria-hidden="true">05</span></button>
+      <button class="nav-item" data-page="mcps"><span class="nav-symbol"><svg><use href="#i-connect"/></svg></span><span class="nav-copy"><b>MCPs</b><small>Connected tools</small></span><span class="nav-index" aria-hidden="true">06</span></button>
+      <button class="nav-item" data-page="guides" title="Guides"><span class="nav-symbol"><svg><use href="#i-file"/></svg></span><span class="nav-copy"><b>Guides</b><small>Setup & how-to</small></span><span class="nav-index" aria-hidden="true">07</span></button>
+      <button class="nav-item" data-page="settings"><span class="nav-symbol"><svg><use href="#i-settings"/></svg></span><span class="nav-copy"><b>Settings</b><small>Make it yours</small></span><span class="nav-index" aria-hidden="true">08</span></button>
+    </nav>
+
+    <div class="side-profile">
+      <div class="side-avatar" id="side-avatar"><span id="side-initials">?</span><img id="side-avatar-img" alt="" hidden></div>
+      <div class="side-who">
+        <b id="side-name">…</b>
+        <span id="side-profile-label">…</span>
+      </div>
+      <button class="icon-btn" id="side-profile-switch" title="Switch local profile" aria-label="Switch local profile"><svg><use href="#i-settings"/></svg></button>
+    </div>
+  </aside>
+
+  <main class="workspace">
+    <header class="topbar">
+      <div class="topbar-title">
+        <span class="topbar-kicker" id="page-kicker">Overview</span>
+        <h2 id="page-title">Good evening</h2>
+      </div>
+      <div class="topbar-right">
+        <span class="conn-pill" id="conn-pill" data-tone="idle"><span class="conn-dot"></span><span id="conn-text">Bridge starting</span></span>
+        <button class="sound-toggle music-toggle" id="music-toggle" type="button" data-sfx="none" aria-pressed="true" aria-label="Pause ambient music" title="Ambient music on">
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        </button>
+        <button class="sound-toggle" id="sound-toggle" type="button" data-sfx="none" aria-pressed="true" aria-label="Mute interface sound" title="Interface sound on">
+          <svg class="icon-sound"><use href="#i-sound"/></svg>
+          <svg class="icon-mute"><use href="#i-mute"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="pages" id="pages">
+      <!-- overview -->
+      <section class="page is-active" data-page="overview">
+        <section class="launch-hero reveal" style="--i:0">
+          <div class="launch-hero-copy">
+            <span class="launch-eyebrow"><span></span> Workspace</span>
+            <h2>Start with a chat.<br><em>Build with your tools.</em></h2>
+            <p>Open a provider, start the extension, and work with your connected tools.</p>
+            <div class="launch-hero-actions"><button type="button" class="primary-btn" id="choose-ai">Open a provider <svg><use href="#i-arrow"/></svg></button><button type="button" class="ghost-btn" data-overview-page="memory">Project memory</button></div>
+          </div>
+          <div class="launch-route" aria-label="AI chat connects through FeatherScript to Studio">
+            <span class="route-caption">Connected through FeatherScript</span>
+            <div class="route-path"><span class="route-end"><svg><use href="#i-spark"/></svg><b>Your AI</b><small>Pick a provider</small></span><span class="route-line"></span><span class="route-feather" aria-label="FeatherScript"></span><span class="route-line"></span><span class="route-end"><svg><use href="#i-connect"/></svg><b>Your tools</b><small>Studio + MCPs</small></span></div>
+            <span class="route-status" id="overview-readiness">Checking your local bridge…</span>
+          </div>
+        </section>
+
+        <div class="stats overview-stats reveal" style="--i:1">
+          <article class="stat-card">
+            <span class="stat-label">Commands</span>
+            <b class="stat-value" id="stat-tools">0</b>
+            <span class="stat-foot">live from the bridge</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Roblox Studio</span>
+            <b class="stat-value stat-text" id="stat-studio">Waiting</b>
+            <span class="stat-foot" id="stat-studio-foot">checking the connection</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Servers</span>
+            <b class="stat-value" id="stat-servers">0</b>
+            <span class="stat-foot">MCP connections</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Bridge</span>
+            <b class="stat-value stat-text" id="stat-bridge">Starting</b>
+            <span class="stat-foot">127.0.0.1:17613</span>
+          </article>
+        </div>
+
+
+        <div class="connection-actions"><button class="ghost-btn" id="refresh-overview-connections" type="button">Refresh connections</button><span class="hint" id="overview-connection-action-status" role="status"></span></div>
+        <div class="overview-shortcuts reveal" style="--i:3">
+          <button type="button" class="workspace-shortcut" data-overview-page="memory"><span class="shortcut-icon"><svg><use href="#i-memory"/></svg></span><span><b>Project memory</b><small>Memory & Obsidian vault</small></span><svg class="shortcut-arrow"><use href="#i-arrow"/></svg></button>
+          <button type="button" class="workspace-shortcut" data-overview-page="skills"><span class="shortcut-icon"><svg><use href="#i-spark"/></svg></span><span><b>Skills library</b><small>Your skills & playbooks</small></span><svg class="shortcut-arrow"><use href="#i-arrow"/></svg></button>
+          <button type="button" class="workspace-shortcut" data-overview-page="mcps"><span class="shortcut-icon"><svg><use href="#i-connect"/></svg></span><span><b>MCP connections</b><small>Manage MCP integrations</small></span><svg class="shortcut-arrow"><use href="#i-arrow"/></svg></button>
+        </div>
+        <div class="overview-help"><div><b>Need help getting connected?</b><p>Setup guides for providers, Blender, permissions and your Obsidian vault.</p></div><button type="button" class="ghost-btn" data-overview-page="guides">Setup guides ↗</button></div>
+        <details class="panel overview-command-drawer reveal" style="--i:4">
+          <summary><span><svg><use href="#i-folder"/></svg>Command library</span><small>Explore the tools available to your agent</small><svg class="drawer-chevron"><use href="#i-plus"/></svg></summary>
+          <section class="commands-panel">
+          <div class="panel-head">
+            <div>
+              <h3>Commands</h3>
+              <p>Everything the agent can call right now.</p>
+            </div>
+            <label class="search">
+              <svg><use href="#i-search"/></svg>
+              <input id="tool-search" type="search" placeholder="Search commands" autocomplete="off" spellcheck="false">
+            </label>
+          </div>
+          <div class="chips" id="tool-chips"></div>
+          <p class="empty" id="tools-empty" hidden>No commands yet. Open Roblox Studio with its MCP server enabled.</p>
+          </section>
+        </details>
+      </section>
+
+      <section class="page" data-page="providers">
+        <section class="ai-launcher panel reveal" style="--i:2" aria-labelledby="ai-launcher-title">
+          <div class="panel-head"><div><span class="eyebrow">Chat providers</span><h3 id="ai-launcher-title">Providers</h3><p>All your chat providers and website shortcuts, in one place.</p></div><span class="local-badge" id="supported-ai-count">12 supported · 1 website</span></div>
+          <div class="ai-grid" id="supported-ai-grid"></div>
+          <div class="ai-launcher-foot"><span><span class="launcher-dot"></span> Chat providers use the extension · Freebuff is website-only</span><span id="last-ai-label">Choose a chat to begin ↗</span></div>
+          <p class="hint" id="ai-launch-status" role="status" aria-live="polite"></p>
+        </section>
+      </section>
+
+      <!-- memory -->
+      <section class="page" data-page="memory">
+        <section class="panel reveal">
+          <div class="panel-head"><div><span class="eyebrow">Automatic memory</span><h3>Projects &amp; handoffs</h3><p>Task checkpoints are saved automatically. Published Studio places are identified by place ID; local projects can be linked to their folder.</p></div><span class="local-badge" id="project-memory-count">0 projects</span></div>
+          <div class="project-library-tools"><input id="project-memory-search" type="search" placeholder="Find a project or folder" aria-label="Find a project"><button type="button" class="ghost-btn" id="project-memory-refresh">Refresh</button></div>
+          <p id="project-memory-status" class="hint" role="status" aria-live="polite"></p>
+          <p id="project-memory-empty" class="hint">Open a new supported AI chat and choose New project or Continue. Its task memory will appear here.</p>
+          <div id="project-memory-list"></div>
+        </section>
+        <section class="panel panel-tall reveal" style="--i:0">
+          <div class="panel-head">
+            <div>
+              <h3>Profile-wide notes</h3>
+              <p>Durable facts the agent should carry between sessions.</p>
+            </div>
+            <span class="save-state" id="memory-state"></span>
+          </div>
+          <textarea class="editor" id="memory-editor" spellcheck="false" placeholder="What is this project? Where do the important scripts live? Which conventions should every session follow?"></textarea>
+          <div class="panel-foot">
+            <span class="hint" id="memory-count">0 characters</span>
+            <span class="hint">Saved to this local profile automatically.</span>
+          </div>
+        </section>
+        <section class="panel reveal vault-panel" style="--i:1">
+          <div class="panel-head"><div><span class="eyebrow">Connected knowledge</span><h3>Obsidian vault</h3><p>Read and search your Markdown notes alongside project memory.</p></div><span class="local-badge" id="app-vault-connection">Not connected</span></div>
+          <form id="app-vault-form">
+            <label class="field"><span>Vault folder</span><span class="vault-folder-row"><input id="app-vault-path" type="text" placeholder="Choose an existing Obsidian vault" autocomplete="off" spellcheck="false"><button type="button" class="ghost-btn" id="app-vault-browse">Browse folders</button></span></label>
+            <label class="vault-permission"><input id="app-vault-write" type="checkbox"><span><b>Allow note edits</b><small>Let the agent create notes and update them when asked.</small></span></label>
+            <div class="panel-foot"><span class="hint" id="app-vault-status" role="status">Shared on this computer. Read-only by default.</span><div class="vault-buttons"><button type="button" class="ghost-btn" id="app-vault-disconnect">Disconnect</button><button type="submit" class="primary-btn" id="app-vault-save">Connect vault</button></div></div>
+          </form>
+        </section>
+      </section>
+
+      <!-- skills -->
+      <section class="page" data-page="skills">
+        <section class="panel reveal" style="--i:0">
+          <div class="panel-head">
+            <div>
+              <h3>Skill library</h3>
+              <p>Folders the agent reads with <code>feather_getskills</code> - a SKILL.md plus any references and scripts.</p>
+            </div>
+            <span class="side-count" id="skills-count">0</span>
+          </div>
+          <form class="add-row" id="skill-form" autocomplete="off">
+            <input id="skill-name" type="text" placeholder="New skill, e.g. Shop GUI conventions" maxlength="60">
+            <input id="skill-desc" type="text" placeholder="One line: when should the agent use it?" maxlength="200">
+            <button class="ghost-btn" type="submit"><svg><use href="#i-plus"/></svg><span>Create</span></button>
+          </form>
+          <div class="panel-foot">
+            <span class="hint" id="skills-path">skills/</span>
+            <div class="foot-actions">
+              <button class="ghost-btn" type="button" id="skills-import"><svg><use href="#i-folder"/></svg><span>Import folder</span></button>
+              <button class="ghost-btn" type="button" id="skills-open"><svg><use href="#i-file"/></svg><span>Open folder</span></button>
+              <button class="ghost-btn" type="button" id="skills-refresh"><svg><use href="#i-refresh"/></svg><span>Refresh</span></button>
+            </div>
+          </div>
+        </section>
+        <div class="list" id="skill-list"></div>
+      </section>
+
+      <!-- notes -->
+      <section class="page" data-page="notes">
+        <section class="panel reveal" style="--i:0">
+          <div class="panel-head">
+            <div>
+              <h3>Scratchpad</h3>
+              <p>Small thoughts, decisions and reminders.</p>
+            </div>
+            <span class="side-count" id="notes-count">0</span>
+          </div>
+          <form class="add-row add-row-note" id="note-form" autocomplete="off">
+            <textarea id="note-text" placeholder="Write a note…" rows="3"></textarea>
+            <button class="ghost-btn" type="submit"><svg><use href="#i-plus"/></svg><span>Add note</span></button>
+          </form>
+        </section>
+        <div class="list" id="note-list"></div>
+      </section>
+
+      <section class="page" data-page="guides"><div class="guides-intro"><div><span class="eyebrow">FEATHERSCRIPT / FIELD NOTES</span><h3>Learn FeatherScript</h3><p>Connect your chat providers, tools and project context.</p><span id="guide-count" class="save-state"></span></div><label class="field guides-search"><span>Find a guide</span><input type="search" id="guide-search" placeholder="Search setup, Blender, vaults…" autocomplete="off"></label></div><div class="guide-categories"><button type="button" id="guide-category-setup" aria-pressed="false">Setup & feature guides<small>Connect your tools and learn the workflow.</small></button><button type="button" id="guide-category-help" aria-pressed="false">Troubleshooting<small>Find the failing connection and fix it.</small></button></div><p id="guide-empty" class="save-state" hidden>No matching guides. Try another search.</p><div class="guide-grid" id="guide-list"></div></section>
+      <!-- settings -->
+      <section class="page" data-page="settings">
+        <section class="panel reveal" style="--i:0">
+          <div class="panel-head">
+            <div><h3>Profile</h3><p>Your name and profile picture.</p></div>
+          </div>
+          <div class="profile-row">
+            <button class="avatar-picker avatar-solid" id="settings-avatar" aria-label="Change profile picture">
+              <span class="avatar-fallback" id="settings-fallback">?</span>
+              <img class="avatar-img" id="settings-avatar-img" alt="" hidden>
+              <span class="avatar-badge"><svg><use href="#i-camera"/></svg></span>
+            </button>
+            <div class="profile-fields">
+              <label class="field"><span>Name</span><input id="settings-name" type="text" maxlength="40"></label>
+
+            </div>
+            <input type="file" id="settings-avatar-file" accept="image/png,image/jpeg,image/webp" hidden>
+          </div>
+          <div class="panel-foot">
+            <span class="save-state" id="profile-state"></span>
+            <button class="ghost-btn" id="save-profile"><span>Save profile</span></button>
+          </div>
+        </section>
+
+        <section class="panel reveal" style="--i:5">
+          <div class="panel-head"><div><h3>Local profiles</h3><p>Separate memory, notes and appearance. Skills and bridge connections are shared on this computer.</p></div><span class="local-badge">On this device</span></div>
+          <label class="field"><span>Active profile</span><select id="profile-select" aria-label="Active local profile"></select></label>
+          <form id="new-profile-form" class="profile-create">
+            <label class="field"><span>New profile name</span><input id="new-profile-name" type="text" minlength="2" maxlength="40" placeholder="e.g. Personal, World builder" required></label>
+            <button class="ghost-btn" type="submit" id="new-profile-create">Create profile</button>
+          </form>
+          <button class="ghost-btn danger-action" type="button" id="profile-remove">Remove this profile</button><p class="save-state" id="profile-remove-hint">Keep at least one local profile.</p>
+          <p id="profiles-status" class="save-state" role="status"></p>
+        </section>
+
+        <section class="panel reveal" style="--i:1">
+          <div class="panel-head">
+            <div><h3>Custom prompt</h3><p>Kept with this local profile on your computer.</p></div>
+            <span class="save-state" id="prompt-state"></span>
+          </div>
+          <textarea class="editor editor-short" id="prompt-editor" spellcheck="false" placeholder="e.g. Always comment your Luau code. Prefer small modular scripts."></textarea>
+        </section>
+
+        <section class="panel reveal" id="layout-panel"><div class="panel-head"><div><h3>Your layout</h3><p>The same workspace, arranged your way. Saved with this profile.</p></div></div><div class="layout-choices" role="group" aria-label="Workspace layout">
+<button type="button" data-layout-choice="default" aria-pressed="true"><span class="layout-sketch sketch-default" aria-hidden="true"></span><b>Default</b><small>Sidebar & notebook</small></button>
+<button type="button" data-layout-choice="studio" aria-pressed="false"><span class="layout-sketch sketch-studio" aria-hidden="true"></span><b>Studio</b><small>Top tabs & focused panels</small></button>
+<button type="button" data-layout-choice="canvas" aria-pressed="false"><span class="layout-sketch sketch-canvas" aria-hidden="true"></span><b>Canvas</b><small>Open space & floating dock</small></button></div><p id="layout-status" class="save-state" role="status"></p></section>
+<section class="panel reveal" id="appearance-panel" style="--i:2">
+          <div class="panel-head">
+            <div><h3>Appearance</h3><p id="theme-count-copy">Find your color.</p></div>
+            <span class="save-state" id="theme-state"></span>
+          </div>
+          <label class="field theme-search"><span>Find a palette</span><input id="theme-search" type="search" placeholder="Search themes…" autocomplete="off"></label>
+          <p id="theme-search-empty" class="save-state" hidden>No matching themes.</p>
+          <div class="theme-grid" id="theme-grid">
+            <button type="button" class="theme-card" data-theme="default">
+              <span class="theme-preview preview-default"><span class="tp-side"></span><span class="tp-bar"></span><span class="tp-block"></span><span class="tp-block tp-block-2"></span></span>
+              <span class="theme-meta"><b>Default</b><span>Warm yellow, like the feather.</span></span>
+              <span class="theme-pick" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="theme-card" data-theme="dark">
+              <span class="theme-preview preview-dark"><span class="tp-side"></span><span class="tp-bar"></span><span class="tp-block"></span><span class="tp-block tp-block-2"></span></span>
+              <span class="theme-meta"><b>Dark</b><span>Deep ink with a warm glow.</span></span>
+              <span class="theme-pick" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="theme-card" data-theme="midnight">
+              <span class="theme-preview preview-midnight"><span class="tp-side"></span><span class="tp-bar"></span><span class="tp-block"></span><span class="tp-block tp-block-2"></span></span>
+              <span class="theme-meta"><b>Midnight</b><span>Deep blue with electric sky accents.</span></span><span class="theme-pick" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <details class="custom-appearance-drawer"><summary>Make your own palette &amp; background <span>Colors · gradients · photos</span></summary>
+          <form id="appearance-form">
+            <div class="appearance-heading">
+              <div><h4>Make this space yours.</h4><p>Build a palette, blend a gradient, or bring a favorite photo.</p></div>
+              <label class="appearance-switch"><input id="appearance-enabled" type="checkbox" data-appearance="enabled"> Use my design</label>
+            </div>
+            <div class="appearance-workbench">
+              <div class="appearance-preview" id="appearance-preview" aria-label="Custom appearance preview">
+                <div class="appearance-preview-header"><span class="appearance-preview-dot"></span> YOUR PERSONAL STUDIO</div>
+                <div><h5 id="appearance-preview-name">My studio</h5><p>A little color. A different perspective. A workspace that feels like you.</p></div>
+                <div class="appearance-preview-tile"><span>PROJECT MEMORY</span><b>Room for your next idea</b></div>
+                <div class="appearance-preview-actions"><span>Made on this device</span><span class="appearance-preview-button">Let's create ↗</span></div>
+              </div>
+              <div class="appearance-controls">
+                <label class="field"><span>Design name</span><input id="appearance-name" data-appearance="name" maxlength="40" autocomplete="off" placeholder="My studio"></label>
+                <div class="appearance-colors">
+                  <label class="appearance-color">Accent<input id="appearance-accent" type="color" data-appearance="accent" value="#b9f36b"></label>
+                  <label class="appearance-color">Canvas<input id="appearance-canvas" type="color" data-appearance="canvas" value="#10151b"></label>
+                  <label class="appearance-color">Surface<input id="appearance-surface" type="color" data-appearance="surface" value="#19212a"></label>
+                  <label class="appearance-color">Text<input id="appearance-text" type="color" data-appearance="text" value="#eef3f6"></label>
+                </div>
+                <p id="appearance-contrast" role="status"></p>
+                <label class="field"><span>Background</span><select id="appearance-mode" data-appearance="mode"><option value="solid">Solid canvas</option><option value="gradient">Color gradient</option><option value="photo">Local photo</option></select></label>
+                <div class="appearance-gradient" id="appearance-gradient-controls">
+                  <div class="appearance-gradient-colors"><label class="appearance-color">First color<input id="appearance-from" type="color" data-appearance="from" value="#10151b"></label><label class="appearance-color">Second color<input id="appearance-to" type="color" data-appearance="to" value="#1a3040"></label></div>
+                  <label class="appearance-range"><span>Direction</span><output id="appearance-angle-value" for="appearance-angle">135°</output><input id="appearance-angle" type="range" min="0" max="360" value="135" data-appearance="angle"></label>
+                </div>
+                <div class="appearance-photo" id="appearance-photo-controls" hidden>
+                  <label class="appearance-photo-upload"><b>Bring your own view</b><span id="appearance-photo-name">PNG, JPEG or WebP · up to 12 MB</span><input id="appearance-photo" type="file" accept="image/png,image/jpeg,image/webp"></label>
+                  <button class="ghost-btn" id="appearance-remove-photo" type="button">Remove photo</button>
+                </div>
+                <label class="appearance-range"><span>Background dimming</span><output id="appearance-overlay-value" for="appearance-overlay">65%</output><input id="appearance-overlay" type="range" min="20" max="95" value="65" data-appearance="overlay"></label>
+              </div>
+            </div>
+            <div class="appearance-footer"><p id="appearance-status" role="status" aria-live="polite">Desktop appearance · saved with this local profile.</p><div class="appearance-footer-actions"><button class="ghost-btn" type="button" id="appearance-reset">Reset to preset</button><button class="primary-btn" type="submit" id="appearance-save">Save my design</button></div></div>
+          </form>
+          </details>
+
+        </section>
+
+        <section class="panel reveal" style="--i:3">
+          <div class="panel-head">
+            <div><h3>Feel</h3><p>Motion, particles and interface sound. Saved with this local profile.</p></div>
+            <span class="save-state" id="feel-state"></span>
+          </div>
+          <div class="feel-grid">
+            <div class="feel-row"><span>Interface motion</span>
+              <div class="segmented" role="radiogroup" aria-label="Interface motion">
+                <button type="button" role="radio" aria-checked="true" class="is-active" data-feel-motion="full">Full</button>
+                <button type="button" role="radio" aria-checked="false" data-feel-motion="reduced">Reduced</button>
+                <button type="button" role="radio" aria-checked="false" data-feel-motion="off">Off</button>
+              </div>
+            </div>
+            <div class="feel-row"><span>Sound</span>
+              <div class="segmented" role="radiogroup" aria-label="Interface sound">
+                <button type="button" role="radio" aria-checked="false" data-feel-sound="full">Full</button>
+                <button type="button" role="radio" aria-checked="true" class="is-active" data-feel-sound="soft">Soft</button>
+                <button type="button" role="radio" aria-checked="false" data-feel-sound="off">Off</button>
+              </div>
+            </div>
+            <div class="feel-row"><span>Particles</span>
+              <div class="feel-range-row">
+                <input class="feel-range" id="feel-intensity" type="range" min="0" max="100" step="5" value="60" aria-label="Particle intensity">
+                <span id="feel-intensity-value">60%</span>
+              </div>
+            </div>
+            <div class="feel-row"><span>Music</span>
+              <div class="segmented" role="radiogroup" aria-label="Ambient music">
+                <button type="button" role="radio" aria-checked="true" class="is-active" data-feel-music="on">On</button>
+                <button type="button" role="radio" aria-checked="false" data-feel-music="off">Off</button>
+              </div>
+            </div>
+            <div class="feel-row"><span>Music volume</span>
+              <div class="feel-range-row">
+                <input class="feel-range" id="music-volume" type="range" min="0" max="100" step="5" value="50" aria-label="Music volume">
+                <span id="music-volume-value">50%</span>
+              </div>
+            </div>
+            <div class="feel-stage" id="feel-stage">
+              <div class="feel-stage-copy"><b>Try it</b><small>Click the stage or any button. Move the pointer through the particles to push them around.</small></div>
+              <div class="feel-stage-actions">
+                <p id="feel-preview-status" class="save-state" role="status"></p><button class="ghost-btn" id="feel-test" type="button" data-sfx="none">Sound &amp; burst</button>
+                <button class="ghost-btn" id="feel-burst" type="button" data-sfx="none">Burst</button>
+              </div>
+            </div>
+            <p id="feel-system-note" hidden>Your system asks for reduced motion, so the interface stays calm until you change this setting.</p>
+          </div>
+        </section>
+
+        <section class="panel reveal" id="computer-panel"><div class="panel-head"><div><h3>Computer access</h3><p>Files, folders, search, clipboard, programs and URLs. Shared across profiles on this device.</p></div><button type="button" id="pc-disable" class="ghost-btn danger-action">Disable now</button></div>
+<form id="pc-form"><label class="pc-enable"><input id="pc-enabled" type="checkbox"> Enable computer tools</label><label class="field"><span>Permission mode</span><select id="pc-mode"><option value="ask">Always ask</option><option value="unusual">Ask when unusual</option><option value="full">Full access</option></select></label>
+<p id="pc-mode-help" class="save-state"></p><label id="pc-full-confirm-row" hidden><input type="checkbox" id="pc-full-confirm"> I understand paired extensions can run programs and edit files as my Windows user without further prompts.</label>
+<div class="pc-section"><b>Trusted folders</b><p class="save-state">In Ask when unusual, listing, reading, searching, writing, copying and appending inside these folders can proceed automatically. Programs, clipboard, URLs, moving, trashing and opening files still ask.</p><ul id="pc-roots"></ul><button type="button" id="pc-folder" class="ghost-btn">Add folder</button></div>
+<div class="panel-foot"><span class="save-state" id="pc-status" role="status"></span><button class="ghost-btn" id="pc-save" type="submit">Save permissions</button></div></form>
+<div class="pc-section"><b>Paired extensions</b><p class="save-state">A new extension always needs approval in a native desktop dialog, including in Full access.</p><ul id="pc-clients"></ul></div>
+<details class="pc-section"><summary>Recent computer activity</summary><button type="button" class="ghost-btn" id="pc-refresh">Refresh</button><ol id="pc-history"></ol></details></section>
+<section class="panel reveal" style="--i:4">
+          <div class="panel-head">
+            <div><h3>Bridge</h3><p>The app starts it for you. Restart if Studio stops responding.</p></div>
+            <button class="ghost-btn" id="bridge-restart"><svg><use href="#i-refresh"/></svg><span>Restart</span></button>
+          </div>
+          <div class="rows">
+            <div class="row"><span class="row-key">Status</span><span class="row-val" id="bridge-status-text">Starting…</span></div>
+            <div class="row"><span class="row-key">Address</span><span class="row-val mono">ws://127.0.0.1:17613</span></div>
+            <div class="row"><span class="row-key">Studio</span><span class="row-val" id="bridge-studio-text">Waiting</span></div>
+          </div>
+        </section>
+
+
+      </section>
+      <section class="page" data-page="mcps">
+        <section class="panel">
+          <div class="panel-head"><div><span class="eyebrow">FEATHERSCRIPT / CONNECTION DESK</span><h3>Your tool connections</h3><p>Keep your workspace connected. Add optional tools only when a task needs them.</p></div></div>
+<div class="mcp-desk-label"><b>01</b><span>Workspace tools</span></div><div class="mcp-primary-grid"><article class="mcp-integration-card"><div class="mcp-card-heading"><h3>Roblox Studio</h3><span class="local-badge">Built in</span></div><p>The primary Studio connection. Open the target place and enable Studio’s MCP server. Its live state appears in the workspace status.</p><span class="mcp-core-note">Core workspace connection</span></article><article class="mcp-integration-card"><h3>Blender workspace</h3><p id="blender-connection" role="status" aria-live="polite">Waiting for bridge status.</p>
+          <form id="blender-config" class="mcp-form">
+            <label class="mcp-toggle"><input type="checkbox" id="blender-enabled"> Enable headless Blender</label>
+            <details class="mcp-setup-details"><summary>Executable & setup</summary><label>Blender executable (optional)<span class="blender-path-row"><input class="editor" id="blender-executable" placeholder="Auto-detect installed Blender" maxlength="4096" autocomplete="off"><button class="ghost-btn" type="button" id="blender-browse">Browse</button></span></label>
+            <p>Uses your installed Blender without opening a window. Starts on the first tool call and keeps the scene until the bridge stops. Supports procedural modeling, transform animation, previews, export and Python scripting. Save your .blend before restarting. No addon, uv or extra download required. Saving configuration briefly restarts the bridge.</p></details>
+            <div class="mcp-actions"><div class="blender-actions"><button class="ghost-btn" type="submit" id="blender-save">Save configuration</button><button type="button" class="ghost-btn" id="blender-test">Test Blender</button></div><p class="blender-diagnostic" id="blender-diagnostic" role="status" hidden></p><span id="blender-state" role="status" aria-live="polite"></span></div>
+          </form>
+          <details><summary>Blender tools</summary><div class="rows" id="blender-tools" aria-live="polite"></div></details></article></div><div class="mcp-desk-label"><b>02</b><span>Optional tools</span><small>Enable only what you use</small></div><div id="mcp-preset-list" class="mcp-connection-list"></div><p id="mcp-preset-status" role="status"></p>
+        </section>
+      </section>
+    </div>
+  </main>
+</section>
+
+<canvas class="fx-layer" id="fx-layer" aria-hidden="true"></canvas>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="sheet" id="skill-sheet" hidden>
+  <div class="sheet-backdrop" data-close-sheet></div>
+  <section class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <header class="sheet-head">
+      <div class="sheet-title">
+        <span class="sheet-kicker" id="sheet-folder">skill</span>
+        <h3 id="sheet-title">Skill</h3>
+      </div>
+      <button class="icon-btn" id="sheet-close" type="button" title="Close" aria-label="Close">
+        <svg><use href="#i-close"/></svg>
+      </button>
+    </header>
+    <div class="sheet-body">
+      <div class="sheet-editor">
+        <div class="sheet-editor-head">
+          <span class="file-chip is-main" id="sheet-file-chip"><svg><use href="#i-file"/></svg><b>SKILL.md</b></span>
+          <span class="save-state" id="sheet-state"></span>
+        </div>
+        <textarea class="editor sheet-text" id="sheet-text" spellcheck="false" placeholder="# What this skill is for&#10;&#10;When to use it, the steps, and the gotchas."></textarea>
+        <span class="hint" id="sheet-count">0 characters</span>
+      </div>
+      <aside class="sheet-files">
+        <div class="sheet-files-head">
+          <span>Bundled files</span>
+          <div class="foot-actions">
+            <button class="mini-btn" id="sheet-add-ref" type="button" title="Add to references/">+ references</button>
+            <button class="mini-btn" id="sheet-add-script" type="button" title="Add to scripts/">+ scripts</button>
+          </div>
+        </div>
+        <div class="drop-zone" id="sheet-drop">
+          <svg><use href="#i-folder"/></svg>
+          <span>Drop files here</span>
+        </div>
+        <div class="file-list" id="sheet-file-list"></div>
+      </aside>
+    </div>
+    <footer class="sheet-foot">
+      <button class="ghost-btn ghost-danger" id="sheet-delete" type="button"><svg><use href="#i-trash"/></svg><span>Move skill to recycle bin</span></button>
+      <button class="primary-btn sheet-save" id="sheet-save" type="button"><span>Save &amp; close</span><svg><use href="#i-arrow"/></svg></button>
+    </footer>
+  </section>
+</div>
+
+<script src="../../featherscript-extension/core/theme-presets.js"></script>
+<script src="providers.js"></script>
+<script src="../appearance.js"></script>
+<script src="modules/layout-transition.js"></script>
+<script src="modules/appearance-controller.js"></script>
+<script src="modules/preview-api.js"></script>
+<script src="modules/bridge-socket.js"></script>
+<script src="modules/projects.js"></script>
+<script src="modules/profiles.js"></script>
+<script src="modules/vault.js"></script>
+<script src="modules/overview.js"></script>
+<script src="modules/providers.js"></script>
+<script src="modules/command-library.js"></script>
+<script src="modules/sfx.js"></script>
+<script src="modules/music.js"></script>
+<script src="../../featherscript-extension/core/theme-motion.js"></script>
+<script src="modules/vfx.js"></script>
+<script src="modules/juice.js"></script>
+<script src="modules/computer-controller.js"></script>
+<script src="modules/blender-controller.js"></script>
+<script src="../../featherscript-extension/core/server-status.js"></script>
+<script src="modules/mcp-presets.js"></script>
+<script src="modules/guides.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

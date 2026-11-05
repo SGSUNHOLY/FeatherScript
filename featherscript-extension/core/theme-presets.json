@@ -1,0 +1,389 @@
+[
+  {
+    "id": "azure",
+    "name": "Azure",
+    "description": "Bright sky blue on cool navy.",
+    "background": "#061426",
+    "surface": "#10243a",
+    "accent": "#60c5ff",
+    "text": "#eff8ff",
+    "muted": "#b5cde1"
+  },
+  {
+    "id": "purple",
+    "name": "Purple",
+    "description": "Electric purple with plum shadows.",
+    "background": "#140b22",
+    "surface": "#241536",
+    "accent": "#c084fc",
+    "text": "#faf5ff",
+    "muted": "#d3bbeb"
+  },
+  {
+    "id": "violet",
+    "name": "Violet",
+    "description": "Indigo nights and soft lilac.",
+    "background": "#100f25",
+    "surface": "#1d1b3b",
+    "accent": "#a5a0ff",
+    "text": "#f5f3ff",
+    "muted": "#c5c2e8"
+  },
+  {
+    "id": "rose",
+    "name": "Rose",
+    "description": "Dusty pink and rich berry.",
+    "background": "#1c0c17",
+    "surface": "#301726",
+    "accent": "#f9a8d4",
+    "text": "#fff1f6",
+    "muted": "#e5becf"
+  },
+  {
+    "id": "crimson",
+    "name": "Crimson",
+    "description": "Ruby red on deep charcoal.",
+    "background": "#1b0c10",
+    "surface": "#30161e",
+    "accent": "#fb7185",
+    "text": "#fff1f2",
+    "muted": "#e7bbc4"
+  },
+  {
+    "id": "sunset",
+    "name": "Sunset",
+    "description": "Warm coral as the light fades.",
+    "background": "#21100f",
+    "surface": "#371f1c",
+    "accent": "#ffad85",
+    "text": "#fff5ed",
+    "muted": "#e7c4b4"
+  },
+  {
+    "id": "amber",
+    "name": "Amber",
+    "description": "Golden light over warm espresso.",
+    "background": "#1a1307",
+    "surface": "#2d2311",
+    "accent": "#fbbf24",
+    "text": "#fffbeb",
+    "muted": "#decba1"
+  },
+  {
+    "id": "emerald",
+    "name": "Emerald",
+    "description": "Luminous green with jade depth.",
+    "background": "#061913",
+    "surface": "#102b22",
+    "accent": "#6ee7b7",
+    "text": "#ecfdf5",
+    "muted": "#afd5c5"
+  },
+  {
+    "id": "forest",
+    "name": "Forest",
+    "description": "Quiet moss and evergreen.",
+    "background": "#10170d",
+    "surface": "#202d1b",
+    "accent": "#bef264",
+    "text": "#f7fee7",
+    "muted": "#c6d6b3"
+  },
+  {
+    "id": "teal",
+    "name": "Teal",
+    "description": "Fresh turquoise against deep teal.",
+    "background": "#071a1d",
+    "surface": "#123034",
+    "accent": "#5eead4",
+    "text": "#f0fdfa",
+    "muted": "#b0d6d3"
+  },
+  {
+    "id": "ocean",
+    "name": "Ocean",
+    "description": "Sea glass and deep Atlantic blue.",
+    "background": "#071923",
+    "surface": "#102c3b",
+    "accent": "#67e8f9",
+    "text": "#ecfeff",
+    "muted": "#b3d3df"
+  },
+  {
+    "id": "graphite",
+    "name": "Graphite",
+    "description": "Clean monochrome without the glare.",
+    "background": "#111214",
+    "surface": "#202226",
+    "accent": "#e2e8f0",
+    "text": "#f8fafc",
+    "muted": "#bdc3ce"
+  },
+  {
+    "id": "nord",
+    "name": "Nord",
+    "description": "Frosted blue and Arctic slate.",
+    "background": "#202733",
+    "surface": "#2e3948",
+    "accent": "#88d8e5",
+    "text": "#f0f4fa",
+    "muted": "#c8d2e1"
+  },
+  {
+    "id": "mocha",
+    "name": "Mocha",
+    "description": "Coffee, cream and caramel.",
+    "background": "#1c1412",
+    "surface": "#30231f",
+    "accent": "#e8bb94",
+    "text": "#fff5eb",
+    "muted": "#d7bfb0"
+  },
+  {
+    "id": "sakura",
+    "name": "Sakura",
+    "description": "Cherry blossom pink at dusk.",
+    "background": "#20121f",
+    "surface": "#352135",
+    "accent": "#ffc2e2",
+    "text": "#fff4fb",
+    "muted": "#e3c2da"
+  },
+  {
+    "id": "pearl",
+    "name": "Pearl",
+    "description": "Airy white with crisp blue details.",
+    "background": "#f1f5f9",
+    "surface": "#ffffff",
+    "accent": "#1d4ed8",
+    "text": "#0f172a",
+    "muted": "#475569",
+    "light": true
+  },
+  {
+    "id": "lavender",
+    "name": "Lavender",
+    "description": "Soft lilac for brighter workdays.",
+    "background": "#f5f3ff",
+    "surface": "#ffffff",
+    "accent": "#6d28d9",
+    "text": "#2e1065",
+    "muted": "#625078",
+    "light": true
+  },
+  {
+    "id": "mint",
+    "name": "Mint",
+    "description": "Light green with a fresh finish.",
+    "background": "#ecfdf5",
+    "surface": "#ffffff",
+    "accent": "#047857",
+    "text": "#064e3b",
+    "muted": "#3f6156",
+    "light": true
+  },
+  {
+    "id": "cobalt",
+    "name": "Cobalt",
+    "description": "Saturated blue, cool silver.",
+    "background": "#080f26",
+    "surface": "#15213c",
+    "accent": "#8ab4ff",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "amethyst",
+    "name": "Amethyst",
+    "description": "Gemstone lilac with violet depth.",
+    "background": "#160d22",
+    "surface": "#2b1938",
+    "accent": "#d6acff",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "copper",
+    "name": "Copper",
+    "description": "Burnished copper and soft charcoal.",
+    "background": "#1d120d",
+    "surface": "#30221a",
+    "accent": "#f7b98c",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "ruby",
+    "name": "Ruby",
+    "description": "Deep wine and luminous pink.",
+    "background": "#200a15",
+    "surface": "#351624",
+    "accent": "#ff9fbd",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "lemon",
+    "name": "Lemon",
+    "description": "Citrus light over ink.",
+    "background": "#181905",
+    "surface": "#282b12",
+    "accent": "#e9ed89",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "sage",
+    "name": "Sage",
+    "description": "Gentle herbs and smoky green.",
+    "background": "#101813",
+    "surface": "#202c25",
+    "accent": "#b9d7ae",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "glacier",
+    "name": "Glacier",
+    "description": "Frozen cyan and polar night.",
+    "background": "#071a24",
+    "surface": "#122d3c",
+    "accent": "#9be7ff",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "ink",
+    "name": "Ink",
+    "description": "Near black with quiet silver.",
+    "background": "#090a0e",
+    "surface": "#191b22",
+    "accent": "#c6d0e8",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "coffee",
+    "name": "Coffee",
+    "description": "Roasted brown and vanilla.",
+    "background": "#1a120e",
+    "surface": "#2e211a",
+    "accent": "#f0d1aa",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "plum",
+    "name": "Plum",
+    "description": "Velvet purple with rose light.",
+    "background": "#1c101e",
+    "surface": "#302032",
+    "accent": "#e6b3e8",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "neon",
+    "name": "Neon",
+    "description": "Acid green, midnight graphite.",
+    "background": "#0a1110",
+    "surface": "#18251f",
+    "accent": "#b9ff71",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "orchid",
+    "name": "Orchid",
+    "description": "Soft magenta after dark.",
+    "background": "#1d1025",
+    "surface": "#31203d",
+    "accent": "#edb3ff",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "terracotta",
+    "name": "Terracotta",
+    "description": "Clay red with warm cream.",
+    "background": "#21130f",
+    "surface": "#37221c",
+    "accent": "#ffb5a0",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "aurora",
+    "name": "Aurora",
+    "description": "Mint lights above navy.",
+    "background": "#08151e",
+    "surface": "#142835",
+    "accent": "#8cf5d5",
+    "text": "#f7f8fc",
+    "muted": "#bdc9d7"
+  },
+  {
+    "id": "blueprint",
+    "name": "Blueprint",
+    "description": "Pale blue with precise navy ink.",
+    "background": "#eaf2ff",
+    "surface": "#ffffff",
+    "accent": "#224baa",
+    "text": "#182536",
+    "muted": "#4c5969",
+    "light": true
+  },
+  {
+    "id": "sand",
+    "name": "Sand",
+    "description": "Warm linen and dark bronze.",
+    "background": "#f7efdf",
+    "surface": "#fffaf0",
+    "accent": "#78501e",
+    "text": "#182536",
+    "muted": "#4c5969",
+    "light": true
+  },
+  {
+    "id": "blossom",
+    "name": "Blossom",
+    "description": "Petal pink with mulberry ink.",
+    "background": "#fff0f5",
+    "surface": "#ffffff",
+    "accent": "#a42d62",
+    "text": "#182536",
+    "muted": "#4c5969",
+    "light": true
+  },
+  {
+    "id": "ice",
+    "name": "Ice",
+    "description": "Glassy white and deep teal.",
+    "background": "#edfafa",
+    "surface": "#ffffff",
+    "accent": "#006d77",
+    "text": "#182536",
+    "muted": "#4c5969",
+    "light": true
+  },
+  {
+    "id": "halloween",
+    "name": "Halloween",
+    "description": "Ember orange, haunted plum and moonlight.",
+    "background": "#130d19",
+    "surface": "#26172b",
+    "accent": "#ffb45c",
+    "text": "#fff5e9",
+    "muted": "#d8bde1"
+  },
+  {
+    "id": "christmas",
+    "name": "Christmas",
+    "description": "Evergreen, winter snow and festive gold.",
+    "background": "#081b18",
+    "surface": "#102d27",
+    "accent": "#f5ce85",
+    "text": "#f1fff8",
+    "muted": "#b5d8ca"
+  }
+]

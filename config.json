@@ -1,0 +1,59 @@
+{
+  "mcpServers": {
+    "roblox": {
+      "command": "launch_studio_mcp.py",
+      "args": []
+    },
+    "blender": {
+      "command": "blender_headless.py",
+      "args": [],
+      "env": {
+        "BLENDER_EXECUTABLE": "",
+        "BLENDER_MCP_SAFE_MODE": "0"
+      }
+    },
+    "browser": {
+      "command": "launch_optional_mcp.py",
+      "args": [
+        "browser"
+      ]
+    },
+    "context7": {
+      "command": "launch_optional_mcp.py",
+      "args": [
+        "context7"
+      ]
+    },
+    "fetch": {
+      "command": "launch_optional_mcp.py",
+      "args": [
+        "fetch"
+      ]
+    },
+    "git": {
+      "command": "launch_optional_mcp.py",
+      "args": [
+        "git"
+      ]
+    },
+    "memory": {
+      "command": "launch_optional_mcp.py",
+      "args": [
+        "memory"
+      ]
+    },
+    "sequential-thinking": {
+      "command": "launch_optional_mcp.py",
+      "args": [
+        "sequential-thinking"
+      ]
+    }
+  },
+  "blender": {
+    "mode": "headless",
+    "executable": "",
+    "safeMode": false,
+    "enabled": true
+  },
+  "theme": "midnight"
+}

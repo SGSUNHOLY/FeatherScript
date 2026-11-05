@@ -1,0 +1,10 @@
+/* Let DWM's native acrylic show through the web page instead of painting an
+   opaque HTML/body/background layer over it. Unsupported OSes keep the fallback. */
+html:has(body.has-native-backdrop),body.has-native-backdrop {background:transparent!important;}
+body.has-native-backdrop .app-ambient {background:color-mix(in srgb,var(--workspace) 24%,transparent);}
+body.has-native-backdrop .app-ambient::before {opacity:.45;}
+body.has-native-backdrop:not([data-layout="canvas"]) .sidebar {background:color-mix(in srgb,var(--sidebar) 68%,transparent);}
+body.has-native-backdrop .topbar {background:color-mix(in srgb,var(--workspace) 52%,transparent);}
+body.has-native-backdrop .panel {background:color-mix(in srgb,var(--panel-solid) 76%,transparent);}
+body.has-native-backdrop .launch-hero {background:color-mix(in srgb,var(--panel-solid) 68%,transparent);}
+body.has-native-backdrop[data-layout="studio"] .topbar {background:transparent;}

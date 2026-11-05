@@ -1,0 +1,2 @@
+# Lint config. The roblox standard library knows Roblox globals such as game, workspace and task.
+std = "roblox"

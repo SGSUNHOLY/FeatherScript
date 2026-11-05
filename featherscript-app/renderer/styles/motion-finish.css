@@ -1,0 +1,31 @@
+/* Final motion layer: bounded transitions, shared easing, one glass backdrop. */
+:root {--motion-fast:140ms;--motion-normal:240ms;--motion-slow:320ms;--motion-ease:cubic-bezier(.2,.8,.2,1);}
+body .panel {backdrop-filter:none;}
+body .app-ambient::before {filter:blur(30px);}
+body :is(.nav-item,.primary-btn,.ghost-btn,.icon-btn,.ai-card,.theme-card,.workspace-shortcut) {transition:transform var(--motion-fast) var(--motion-ease),border-color var(--motion-normal) ease,background-color var(--motion-normal) ease,color var(--motion-fast) ease;}
+body .pages {overscroll-behavior:contain;scrollbar-gutter:stable;}
+body .page.is-active :is(.panel-head>div,.ai-card,.stat-card) {animation:none;}
+body .theme-card .theme-preview {backface-visibility:hidden;}
+body .nav-symbol {transition:transform var(--motion-normal) var(--motion-ease);}
+body .panel:focus-within {border-color:color-mix(in srgb,var(--accent) 45%,var(--panel-line));}
+@media(prefers-reduced-motion:no-preference) {
+ body[data-motion="full"] .page.is-active {animation:fs-surface-arrive var(--motion-normal) var(--motion-ease) both;}
+ body[data-motion="full"] .sheet.is-open .sheet-card {animation:fs-surface-arrive var(--motion-slow) var(--motion-ease) both;}
+ body[data-motion="full"] :is(.primary-btn,.ghost-btn,.icon-btn):active {transform:scale(.97);}
+ @media(hover:hover) and (pointer:fine) {
+  body[data-motion="full"] :is(.ai-card,.workspace-shortcut):hover {transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 48%,var(--panel-line));}
+  body[data-motion="full"] .nav-item:hover .nav-symbol {transform:translateX(2px);}
+ }
+ @keyframes fs-surface-arrive {from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+}
+::view-transition-old(root) {animation:fs-layout-out 150ms ease-out both;}
+::view-transition-new(root) {animation:fs-layout-in 260ms var(--motion-ease) both;}
+@keyframes fs-layout-out {to{opacity:0;}}
+@keyframes fs-layout-in {from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+body[data-fx-paused="true"] :is(.eq i,.conn-pill .conn-dot,.boot-feather),body[data-fx-paused="true"] .boot-orbit::after {animation-play-state:paused!important;}
+body[data-motion="reduced"] *,body[data-motion="reduced"] *::before,body[data-motion="reduced"] *::after {animation:none!important;transition-duration:80ms!important;}
+body[data-motion="off"] *,body[data-motion="off"] *::before,body[data-motion="off"] *::after {animation:none!important;transition:none!important;}
+@media(prefers-reduced-motion:reduce) {
+ body *,body *::before,body *::after {animation:none!important;transition-duration:0ms!important;}
+ ::view-transition-old(root),::view-transition-new(root) {animation:none!important;}
+}

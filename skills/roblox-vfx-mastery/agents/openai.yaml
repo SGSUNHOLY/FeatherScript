@@ -1,0 +1,14 @@
+interface:
+  display_name: Roblox VFX Mastery
+  short_description: Build polished, performant Roblox visual effects
+  default_prompt: Use $roblox-vfx-mastery to build and test polished Roblox Studio
+    visual effects.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

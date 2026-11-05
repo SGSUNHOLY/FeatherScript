@@ -1,0 +1,220 @@
+/* Workspace navigation — a printed table of contents, not a sidebar of pills. */
+.nav-item svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .92;
+}
+
+.nav-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 6px 10px;
+  color: var(--sidebar-soft);
+  font: 7.5px/1 var(--font-mono);
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.nav-caption::before {
+  content: "";
+  width: 12px;
+  height: 1px;
+  flex: none;
+  background: var(--nav-fill);
+}
+
+.nav-caption span {
+  margin-left: auto;
+  flex: none;
+  opacity: .55;
+}
+
+.side-brand {
+  padding-bottom: 22px;
+}
+
+.side-nav {
+  position: relative;
+  display: grid;
+  gap: 0;
+}
+
+.nav-item {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 10px 0 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--sidebar-soft);
+  font-size: 12.8px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .18s, color .18s;
+}
+
+.nav-item + .nav-item {
+  box-shadow: inset 0 1px 0 var(--sidebar-line);
+}
+
+.nav-item:hover {
+  color: var(--sidebar-text);
+  background: color-mix(in srgb, var(--nav-fill) 9%, transparent);
+}
+
+.nav-item:active {
+  background: color-mix(in srgb, var(--nav-fill) 15%, transparent);
+}
+
+/* The contents number sits in a fixed gutter to the left of the icon. */
+.nav-index {
+  order: -1;
+  flex: none;
+  width: 34px;
+  padding-left: 3px;
+  text-align: right;
+  font: 8.5px/1 var(--font-mono);
+  letter-spacing: .05em;
+  font-variant-numeric: tabular-nums;
+  color: var(--sidebar-soft);
+  opacity: .55;
+  transition: opacity .18s, color .18s;
+}
+
+.nav-symbol {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--sidebar-soft);
+  transition: color .18s, transform .18s var(--ease);
+}
+
+.nav-symbol svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.5;
+}
+
+.nav-copy {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.nav-copy b {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: .015em;
+}
+
+.nav-copy small {
+  font-size: 9.5px;
+  font-weight: 400;
+  color: var(--sidebar-soft);
+  transition: color .18s;
+}
+
+.nav-item:hover .nav-index {
+  color: var(--sidebar-text);
+  opacity: 1;
+}
+
+.nav-item:hover .nav-symbol {
+  color: var(--sidebar-text);
+  transform: translateX(1px);
+}
+
+/* Sliding highlighter fill, positioned by positionNavInk(). */
+.nav-ink {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 56px;
+  border-radius: 0;
+  background: var(--nav-fill);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--nav-ink-text) 22%, transparent);
+  pointer-events: none;
+  transition: transform .32s var(--ease), height .2s;
+}
+
+.nav-ink::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--mark);
+}
+
+.nav-item.is-active {
+  color: var(--nav-ink-text);
+  box-shadow: none;
+}
+
+.nav-item.is-active .nav-index {
+  color: var(--nav-ink-text);
+  opacity: .62;
+}
+
+.nav-item.is-active .nav-symbol {
+  color: var(--nav-ink-text);
+}
+
+.nav-item.is-active .nav-copy small {
+  color: color-mix(in srgb, var(--nav-ink-text) 62%, transparent);
+}
+
+.nav-item.is-active .nav-copy b {
+  font-weight: 700;
+}
+
+.nav-item:focus-visible {
+  outline: 2px solid var(--nav-fill);
+  outline-offset: -2px;
+}
+
+@media (max-height:720px) {
+  .nav-item {
+    height: 48px;
+  }
+
+  .nav-copy {
+    gap: 1px;
+  }
+
+  .nav-caption {
+    margin-bottom: 7px;
+  }
+
+  .side-brand {
+    padding-bottom: 16px;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .nav-ink,
+  .nav-symbol,
+  .nav-index {
+    transition: none;
+  }
+}

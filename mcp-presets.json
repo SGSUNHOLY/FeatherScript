@@ -1,0 +1,56 @@
+[
+  {
+    "id": "browser",
+    "title": "Browser",
+    "description": "Open a separate browser for page inspection, screenshots, clicks and forms. This does not use your signed-in browser session.",
+    "runner": "npm",
+    "args": [
+      "@playwright/mcp@0.0.84"
+    ]
+  },
+  {
+    "id": "context7",
+    "title": "Context7",
+    "description": "Look up library documentation. Service quotas or API authentication may apply.",
+    "runner": "npm",
+    "args": [
+      "@upstash/context7-mcp@4.5.0"
+    ]
+  },
+  {
+    "id": "fetch",
+    "title": "Fetch",
+    "description": "Read web resources through a fetch MCP server.",
+    "runner": "uvx",
+    "args": [
+      "mcp-server-fetch==2026.11.4"
+    ]
+  },
+  {
+    "id": "git",
+    "title": "Git",
+    "description": "Inspect and operate on local repositories. Requires Git installed; provide the intended repository path.",
+    "runner": "uvx",
+    "args": [
+      "mcp-server-git==2026.11.4"
+    ]
+  },
+  {
+    "id": "memory",
+    "title": "Memory graph",
+    "description": "Store entities and relationships in a local knowledge graph. Separate from Quick Settings notes and continuation.",
+    "runner": "npm",
+    "args": [
+      "@modelcontextprotocol/server-memory@2.1.0"
+    ]
+  },
+  {
+    "id": "sequential-thinking",
+    "title": "Sequential Thinking",
+    "description": "Structured problem-solving utilities for tasks that benefit from explicit intermediate steps.",
+    "runner": "npm",
+    "args": [
+      "@modelcontextprotocol/server-sequential-thinking@2.1.1"
+    ]
+  }
+]

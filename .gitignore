@@ -1,0 +1,21 @@
+# Local-only folders
+Compressed/
+Deprecated/
+ExtensionPresentation/
+presentation/
+
+# Zip files
+*.zip
+releases/
+
+# Local dev / diagnostic tools
+logs/
+devtools/
+.qa/
+featherscript-app/node_modules/
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+__pycache__/

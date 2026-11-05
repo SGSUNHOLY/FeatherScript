@@ -1,0 +1,154 @@
+/* Shared app/controller scenery. Only transform and opacity animate; no timers or raster filters. */
+.fs-theme-motion{position:absolute;inset:0;overflow:hidden;pointer-events:none!important;contain:layout paint;isolation:isolate;--scene-color:var(--accent,var(--zs-ui-a,#38bdf8));--scene-soft:color-mix(in srgb,var(--scene-color) 50%,transparent);--scene-period:36s;color:var(--scene-color);opacity:.85;}
+.fs-theme-motion *{box-sizing:border-box;pointer-events:none!important;}
+.fs-scene-stage{position:absolute;width:620px;height:560px;right:-45px;top:12%;transform:rotate(var(--scene-angle));}
+.fs-scene-stage :where(span){position:absolute;display:block;animation-delay:var(--phase,0s);animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-duration:var(--scene-period);animation-fill-mode:both;}
+.fs-theme-motion[data-scene-theme="auto"]{display:none;}
+.fs-theme-motion[data-compact="true"]{border-radius:inherit;opacity:.22;z-index:0;}
+.fs-theme-motion[data-compact="true"] .fs-scene-stage{width:620px;height:560px;right:-180px;top:50%;margin-top:-280px;transform:scale(.48) rotate(var(--scene-angle));transform-origin:center;}
+#zs-root #zs-bar>.fs-theme-motion~*{position:relative;z-index:1;}
+#zs-root #zs-bar.is-min>.fs-theme-motion{display:none;}
+.app-ambient:has(.fs-theme-motion)::after{opacity:.25!important;animation:none!important;}
+body.has-custom-scene .app-ambient>.fs-theme-motion{display:none;}
+/* Orbital planes stay fixed while planets actually move around the central star. */
+.fs-scene-sun-core{left:297px;top:257px;width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 32% 30%,var(--scene-color),transparent 75%);box-shadow:0 0 35px var(--scene-soft);animation-name:fs-scene-breathe;}
+.fs-scene-orbit-plane{left:310px;top:270px;width:var(--diameter);height:var(--diameter);margin-left:calc(var(--diameter)/-2);margin-top:calc(var(--diameter)/-2);border:1px solid var(--scene-soft);border-radius:50%;transform:rotate(-18deg) scaleY(.58);}
+.fs-scene-stage .fs-scene-orbiter{inset:0;animation-name:fs-scene-turn;animation-duration:calc(var(--scene-period) + var(--i)*17s);animation-timing-function:linear;}
+.fs-scene-planet,.fs-scene-ringed-planet{width:calc(16px + var(--i)*6px);height:calc(16px + var(--i)*6px);left:50%;top:0;margin-top:-10px;border-radius:50%;border:1px solid var(--scene-soft);transform:scaleY(var(--planet-stretch,1.72414));background:radial-gradient(circle at 28% 25%,color-mix(in srgb,var(--scene-color) 35%,white),var(--scene-color) 36%,color-mix(in srgb,var(--scene-color) 30%,#091221) 82%);box-shadow:0 0 10px var(--scene-soft);animation-name:fs-scene-planet-counter;animation-duration:calc(var(--scene-period) + var(--i)*17s)!important;animation-timing-function:linear!important;}
+.fs-scene-ringed-planet::after{content:"";position:absolute;inset:3px -10px;border:2px solid var(--scene-color);border-radius:50%;transform:rotate(-28deg);opacity:.7;}
+.fs-scene-star,.fs-scene-firefly,.fs-scene-dust{left:var(--x);top:var(--y);width:3px;height:3px;border-radius:50%;background:currentColor;animation-name:fs-scene-twinkle;}
+.fs-scene-stage .fs-scene-star{animation-duration:calc(3s + var(--i)*.7s);}
+.fs-scene-comet{left:42%;top:12%;width:90px;height:1px;background:linear-gradient(90deg,transparent,currentColor);transform:rotate(-35deg);animation-name:fs-scene-comet;}
+.fs-scene-radar{left:120px;top:80px;width:380px;height:380px;border-radius:50%;background:conic-gradient(from 0deg,transparent 70%,var(--scene-soft));animation-name:fs-scene-turn;animation-timing-function:linear;}
+.fs-scene-cloud{left:calc(40px + var(--i)*110px);top:calc(90px + var(--i)*100px);width:230px;height:62px;border-radius:90px;border:1px solid var(--scene-soft);background:linear-gradient(0deg,transparent,var(--scene-soft));animation-name:fs-scene-cloud;animation-direction:alternate;}
+.fs-scene-cloud::before{content:"";position:absolute;left:40px;top:-32px;width:100px;height:75px;border-radius:60% 60% 0 0;border-top:1px solid var(--scene-soft);}
+.fs-scene-airline{inset:40px 80px;border-top:1px dashed var(--scene-soft);border-radius:50%;animation-name:fs-scene-rise;}
+.fs-scene-wave{left:-50px;top:calc(170px + var(--i)*60px);width:700px;height:230px;border-top:2px solid currentColor;border-radius:48%;opacity:calc(.35 - var(--i)*.07);animation-name:fs-scene-wave;animation-direction:alternate;}
+.fs-scene-bubble{left:var(--x);top:var(--y);width:var(--size);height:var(--size);border:1px solid currentColor;border-radius:50%;animation-name:fs-scene-rise;}
+.fs-scene-petal,.fs-scene-leaf{left:var(--x);top:var(--y);width:calc(var(--size)*1.6);height:calc(var(--size)*2.4);border-radius:80% 0 80% 25%;background:linear-gradient(135deg,var(--scene-color),transparent);animation-name:fs-scene-fall;animation-duration:calc(12s + var(--i)*1.7s);}
+.fs-scene-branch,.fs-scene-stem{right:120px;top:75px;width:150px;height:360px;border-right:2px solid var(--scene-soft);border-radius:50%;transform:rotate(25deg);animation-name:fs-scene-sway;transform-origin:bottom;}
+.fs-scene-leaf{border-radius:0 100%;animation-name:fs-scene-leaf;}
+.fs-scene-pine{left:calc(110px + var(--i)*150px);bottom:40px;width:150px;height:260px;background:linear-gradient(0deg,transparent,var(--scene-soft));clip-path:polygon(50% 0,76% 32%,65% 32%,90% 64%,74% 64%,100% 95%,56% 95%,56% 100%,44% 100%,44% 95%,0 95%,26% 64%,10% 64%,35% 32%,24% 32%);transform-origin:bottom;animation-name:fs-scene-sway;}
+.fs-scene-firefly{box-shadow:0 0 7px currentColor;animation-name:fs-scene-firefly;animation-duration:calc(8s + var(--i)*1.2s);}
+.fs-scene-snow{left:var(--x);top:0;width:var(--size);height:var(--size);border-radius:50%;background:currentColor;opacity:.45;animation-name:fs-scene-snow;animation-duration:calc(13s + var(--i)*1.9s);animation-timing-function:linear;}
+.fs-scene-ice-ring{inset:110px 140px;border:1px solid var(--scene-soft);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);animation-name:fs-scene-turn;animation-timing-function:linear;}
+.fs-scene-holiday-star{left:245px;top:180px;width:24px;height:24px;background:currentColor;clip-path:polygon(50% 0,62% 35%,100% 40%,70% 62%,80% 100%,50% 78%,20% 100%,30% 62%,0 40%,38% 35%);animation-name:fs-scene-twinkle;}
+.fs-scene-moon{right:100px;top:70px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 30% 35%,var(--scene-color),var(--scene-soft));box-shadow:0 0 65px var(--scene-soft);animation-name:fs-scene-breathe;}
+.fs-scene-bat{left:calc(80px + var(--i)*130px);top:calc(130px + var(--i)*80px);width:42px;height:18px;background:currentColor;clip-path:polygon(0 0,25% 20%,43% 55%,47% 30%,50% 42%,54% 30%,58% 55%,75% 20%,100% 0,90% 85%,70% 70%,50% 100%,30% 70%,10% 85%);animation-name:fs-scene-bat;}
+.fs-scene-ember{left:var(--x);top:var(--y);width:3px;height:8px;background:currentColor;border-radius:50%;animation-name:fs-scene-rise;}
+.fs-scene-dial{left:calc(100px + var(--i)*180px);top:calc(60px + var(--i)*140px);width:260px;height:260px;border:1px solid var(--scene-soft);border-radius:50%;background:repeating-conic-gradient(from 0deg,var(--scene-soft) 0 1deg,transparent 1deg 15deg);mask-image:radial-gradient(circle,transparent 60%,#000 61%,#000 67%,transparent 68%);}
+.fs-scene-stage .fs-scene-needle{left:50%;top:50%;width:42%;height:1px;background:currentColor;transform-origin:left;animation-name:fs-scene-needle;}
+.fs-scene-dial:has(.fs-scene-needle){mask-image:none;background:repeating-conic-gradient(from 0deg,var(--scene-soft) 0 1deg,transparent 1deg 30deg);border:12px double var(--scene-soft);}
+.fs-scene-gear{left:calc(80px + var(--i)*200px);top:calc(60px + var(--i)*190px);width:250px;height:250px;border:20px dashed var(--scene-soft);border-radius:50%;outline:1px solid var(--scene-soft);animation-name:fs-scene-turn;animation-timing-function:linear;}
+.fs-scene-gear::before{content:"";position:absolute;inset:55px;border:1px solid currentColor;border-radius:50%;}
+.fs-scene-crystal{left:calc(90px + var(--i)*110px);top:calc(120px + var(--i)*27px);width:90px;height:220px;clip-path:polygon(50% 0,100% 35%,65% 100%,35% 100%,0 35%);background:conic-gradient(from 18deg at 50% 35%,transparent,var(--scene-soft),var(--scene-color),transparent,var(--scene-soft));animation-name:fs-scene-float;animation-duration:calc(8s + var(--i)*3s);}
+.fs-scene-glint{left:90px;top:200px;width:400px;height:1px;background:linear-gradient(90deg,transparent,var(--scene-color),transparent);animation-name:fs-scene-glint;transform:rotate(-35deg);}
+.fs-scene-cup{left:210px;top:310px;width:160px;height:80px;border:1px solid var(--scene-soft);border-radius:5px 5px 60px 60px;}
+.fs-scene-cup::after{content:"";position:absolute;right:-34px;top:8px;width:35px;height:45px;border:1px solid var(--scene-soft);border-radius:0 60% 60% 0;}
+.fs-scene-steam{left:calc(225px + var(--i)*48px);top:220px;width:40px;height:110px;border-left:2px solid var(--scene-soft);border-radius:50%;animation-name:fs-scene-steam;}
+.fs-scene-horizon{left:0;right:0;top:330px;height:100px;border-top:1px solid var(--scene-soft);border-radius:50%;background:linear-gradient(var(--scene-soft),transparent);}
+.fs-scene-setting-sun{left:200px;top:170px;width:200px;height:200px;border-radius:50%;background:linear-gradient(var(--scene-color),transparent);opacity:.3;animation-name:fs-scene-sunset;}
+.fs-scene-heat{left:80px;top:calc(340px + var(--i)*30px);width:430px;border-top:1px solid var(--scene-soft);animation-name:fs-scene-wave;}
+.fs-scene-mountain{left:calc(10px + var(--i)*140px);bottom:60px;width:340px;height:calc(210px + var(--i)*40px);background:linear-gradient(150deg,var(--scene-soft),transparent 65%);clip-path:polygon(50% 0,100% 100%,0 100%);}
+.fs-scene-mist{left:0;top:260px;width:650px;height:70px;background:linear-gradient(transparent,var(--scene-soft),transparent);animation-name:fs-scene-cloud;animation-direction:alternate;}
+.fs-scene-aurora{left:calc(40px + var(--i)*110px);top:40px;width:260px;height:400px;border-radius:60% 40% 50% 50%;background:linear-gradient(90deg,transparent,var(--scene-soft),transparent);transform-origin:top;animation-name:fs-scene-aurora;animation-direction:alternate;}
+.fs-scene-circuit{left:calc(100px + var(--i)*115px);top:calc(70px + var(--i)*80px);width:210px;height:220px;border-top:1px solid var(--scene-soft);border-right:1px solid var(--scene-soft);border-radius:0 35px 0 0;}
+.fs-scene-signal{left:var(--x);top:var(--y);width:5px;height:5px;background:currentColor;box-shadow:0 0 10px currentColor;animation-name:fs-scene-signal;animation-duration:calc(5s + var(--i)*2s);}
+.fs-scene-speedline{left:calc(60px + var(--i)*115px);top:80px;width:2px;height:280px;background:linear-gradient(transparent,currentColor,transparent);transform:rotate(28deg);animation-name:fs-scene-speed;animation-duration:calc(3s + var(--i)*.8s);}
+.fs-scene-checkers{right:80px;bottom:90px;width:160px;height:55px;background:repeating-conic-gradient(var(--scene-soft) 0 25%,transparent 0 50%) 0/24px 24px;}
+.fs-scene-contour{left:calc(60px + var(--i)*32px);top:calc(55px + var(--i)*35px);width:420px;height:340px;border:1px solid var(--scene-soft);border-radius:35% 65% 60% 40%;animation-name:fs-scene-contour;animation-direction:alternate;}
+.fs-scene-grain{right:170px;top:200px;width:3px;height:3px;background:currentColor;box-shadow:35px 55px var(--scene-soft),-30px 80px var(--scene-soft),80px -50px var(--scene-soft);animation-name:fs-scene-float;}
+.fs-scene-arch{left:calc(60px + var(--i)*90px);top:calc(70px + var(--i)*55px);width:260px;height:350px;border:1px solid var(--scene-soft);border-bottom:0;border-radius:150px 150px 0 0;animation-name:fs-scene-arch;}
+.fs-scene-tile{left:calc(130px + mod(var(--i),3)*110px);top:calc(110px + round(down,var(--i)/3)*130px);width:90px;height:90px;border:1px solid var(--scene-soft);border-radius:16px;animation-name:fs-scene-tile;animation-duration:calc(7s + var(--i)*2s);}
+.fs-scene-deco{left:calc(90px + var(--i)*60px);top:calc(70px + var(--i)*45px);width:350px;height:350px;border:1px solid var(--scene-soft);transform:rotate(45deg);animation-name:fs-scene-deco;}
+.fs-scene-citrus{left:calc(90px + var(--i)*210px);top:calc(110px + var(--i)*140px);width:170px;height:170px;border:10px double var(--scene-soft);border-radius:50%;background:repeating-conic-gradient(var(--scene-soft) 0 1deg,transparent 1deg 45deg);animation-name:fs-scene-turn;animation-timing-function:linear;}
+.fs-scene-draft-grid{inset:60px;border:1px solid var(--scene-soft);background:linear-gradient(90deg,var(--scene-soft) 1px,transparent 1px),linear-gradient(var(--scene-soft) 1px,transparent 1px);background-size:40px 40px;opacity:.25;}
+.fs-scene-compass{left:190px;top:150px;width:220px;height:220px;border:1px dashed currentColor;border-radius:50%;animation-name:fs-scene-turn;animation-timing-function:linear;}
+.fs-scene-scan{left:80px;top:70px;width:430px;height:1px;background:linear-gradient(90deg,transparent,currentColor,transparent);animation-name:fs-scene-scan;}
+.fs-scene-page{left:130px;top:90px;width:300px;height:360px;border:1px solid var(--scene-soft);border-radius:8px;background:repeating-linear-gradient(0deg,transparent 0 31px,var(--scene-soft) 31px 32px);transform:rotate(-8deg);}
+.fs-scene-seal{left:340px;top:120px;width:80px;height:80px;border:5px double var(--scene-soft);border-radius:50%;animation-name:fs-scene-seal;}
+/* Theme-specific choreography beyond shared shape families. */
+[data-scene-theme="purple"] .fs-scene-stage{transform:rotate(22deg);}
+[data-scene-theme="purple"] .fs-scene-orbit-plane{--planet-stretch:1.28205;transform:rotate(12deg) scaleY(.78);}
+[data-scene-theme="cobalt"] .fs-scene-orbit-plane{--planet-stretch:1.11111;transform:rotate(45deg) scaleY(.9);border-style:dashed;}
+[data-scene-theme="cobalt"] .fs-scene-planet{border-radius:2px;}
+[data-scene-theme="amber"] .fs-scene-dial{width:300px;height:300px;border-style:dotted;}
+[data-scene-theme="violet"] .fs-scene-crystal{animation-name:fs-scene-prism;}
+[data-scene-theme="amethyst"] .fs-scene-crystal{height:280px;transform-origin:bottom;animation-name:fs-scene-sway;}
+[data-scene-theme="sakura"] .fs-scene-petal{border-radius:85% 25% 70% 40%;width:12px;height:17px;}
+[data-scene-theme="orchid"] .fs-scene-petal{animation-name:fs-scene-orchid;border-radius:80% 20%;width:20px;height:27px;}
+[data-scene-theme="blossom"] .fs-scene-petal{animation-direction:reverse;border-radius:50% 50% 0 50%;}
+[data-scene-theme="sage"] .fs-scene-leaf{animation-direction:reverse;width:20px;height:9px;}
+[data-scene-theme="glacier"] .fs-scene-mist{animation-name:fs-scene-rise;}
+[data-scene-theme="glacier"] .fs-scene-mountain{background:linear-gradient(150deg,var(--scene-soft),transparent 90%);}
+[data-scene-theme="coffee"] .fs-scene-steam{animation-name:fs-scene-coffee;}
+[data-scene-theme="plum"] .fs-scene-wave{animation-name:fs-scene-plum;border-radius:32%;}
+[data-scene-theme="neon"] .fs-scene-circuit{border-style:dashed;transform:rotate(-20deg);}
+[data-scene-theme="neon"] .fs-scene-signal{animation-name:fs-scene-neon;}
+[data-scene-theme="terracotta"] .fs-scene-arch{animation-name:fs-scene-terracotta;transform-origin:bottom;}
+[data-scene-theme="sand"] .fs-scene-contour{animation-name:fs-scene-dune;border-radius:50% 50% 15% 15%;}
+[data-scene-theme="ink"] .fs-scene-seal{border-radius:2px;animation-direction:reverse;}
+[data-scene-theme="ink"] .fs-scene-page{transform:rotate(7deg);border-style:dashed;}
+[data-scene-theme="christmas"] .fs-scene-snow:nth-child(3n){clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);border-radius:0;}
+@keyframes fs-scene-turn{to{transform:rotate(360deg);}}
+@keyframes fs-scene-planet-counter{from{transform:rotate(0deg) scaleY(var(--planet-stretch,1.72414));}to{transform:rotate(-360deg) scaleY(var(--planet-stretch,1.72414));}}
+@keyframes fs-scene-breathe{50%{opacity:.4;transform:scale(.9);}}
+@keyframes fs-scene-twinkle{0%,100%{opacity:.15;transform:scale(.7);}50%{opacity:.85;transform:scale(1.2);}}
+@keyframes fs-scene-comet{0%,82%{opacity:0;transform:translate(140px,-80px) rotate(-35deg);}84%{opacity:.8;}94%,100%{opacity:0;transform:translate(-300px,220px) rotate(-35deg);}}
+@keyframes fs-scene-cloud{from{transform:translateX(-55px);}to{transform:translateX(65px);}}
+@keyframes fs-scene-wave{from{transform:translate(-30px,15px) rotate(-4deg);}to{transform:translate(40px,-20px) rotate(5deg);}}
+@keyframes fs-scene-rise{0%{opacity:0;transform:translate(0,60px);}30%{opacity:.6;}100%{opacity:0;transform:translate(35px,-170px);}}
+@keyframes fs-scene-fall{0%{opacity:0;transform:translate(-50px,-140px) rotate(-30deg);}15%,80%{opacity:.6;}100%{opacity:0;transform:translate(85px,280px) rotate(200deg);}}
+@keyframes fs-scene-leaf{0%{opacity:0;transform:translate(0,-80px) rotate(-40deg);}25%,75%{opacity:.5;}100%{opacity:0;transform:translate(-110px,240px) rotate(100deg);}}
+@keyframes fs-scene-sway{0%,100%{transform:rotate(-3deg);}50%{transform:rotate(4deg);}}
+@keyframes fs-scene-firefly{0%,100%{opacity:.1;transform:translate(-12px,8px);}50%{opacity:.8;transform:translate(24px,-22px);}}
+@keyframes fs-scene-snow{0%{transform:translate(-18px,-25px);opacity:0;}12%,85%{opacity:.55;}100%{transform:translate(55px,580px);opacity:0;}}
+@keyframes fs-scene-bat{0%,100%{transform:translate(-35px,8px) rotate(-8deg);}50%{transform:translate(45px,-30px) rotate(9deg);}}
+@keyframes fs-scene-needle{0%,100%{transform:rotate(-60deg);}50%{transform:rotate(85deg);}}
+@keyframes fs-scene-float{0%,100%{transform:translateY(12px) rotate(-4deg);opacity:.35;}50%{transform:translateY(-22px) rotate(5deg);opacity:.7;}}
+@keyframes fs-scene-glint{0%,65%,100%{opacity:0;transform:translateY(120px) rotate(-35deg);}78%{opacity:.5;}90%{opacity:0;transform:translateY(-180px) rotate(-35deg);}}
+@keyframes fs-scene-steam{0%{opacity:0;transform:translateY(25px) scaleX(.7);}30%{opacity:.6;}100%{opacity:0;transform:translate(20px,-160px) scaleX(1.4);}}
+@keyframes fs-scene-sunset{0%,100%{transform:translateY(-15px);opacity:.25;}50%{transform:translateY(35px);opacity:.45;}}
+@keyframes fs-scene-aurora{from{transform:skewX(-16deg) scaleX(.8);opacity:.25;}to{transform:skewX(20deg) scaleX(1.2);opacity:.65;}}
+@keyframes fs-scene-signal{0%,10%{opacity:0;transform:translateY(0);}30%,60%{opacity:.8;}100%{opacity:0;transform:translateY(150px);}}
+@keyframes fs-scene-speed{0%{opacity:0;transform:translate(-30px,-150px) rotate(28deg);}30%{opacity:.6;}100%{opacity:0;transform:translate(120px,240px) rotate(28deg);}}
+@keyframes fs-scene-contour{from{transform:rotate(-8deg) scale(.95);}to{transform:rotate(10deg) scale(1.06);}}
+@keyframes fs-scene-arch{0%,100%{transform:translateY(15px);opacity:.2;}50%{transform:translateY(-20px);opacity:.7;}}
+@keyframes fs-scene-tile{0%,100%{transform:translateY(10px) rotate(-4deg);opacity:.2;}50%{transform:translateY(-15px) rotate(6deg);opacity:.7;}}
+@keyframes fs-scene-deco{0%,100%{transform:rotate(45deg) scale(.94);opacity:.3;}50%{transform:rotate(45deg) scale(1.04);opacity:.7;}}
+@keyframes fs-scene-scan{0%,100%{transform:translateY(0);opacity:.1;}50%{transform:translateY(400px);opacity:.6;}}
+@keyframes fs-scene-seal{0%,100%{transform:rotate(-10deg);opacity:.3;}50%{transform:rotate(10deg);opacity:.7;}}
+@keyframes fs-scene-prism{0%,100%{transform:translateY(12px) rotateY(-20deg);}50%{transform:translateY(-12px) rotateY(30deg);}}
+@keyframes fs-scene-orchid{0%,100%{transform:translate(-20px,20px) rotate(-20deg);opacity:.2;}50%{transform:translate(35px,-40px) rotate(45deg);opacity:.7;}}
+@keyframes fs-scene-coffee{0%{transform:translate(-10px,0) rotate(-8deg);opacity:0;}40%{opacity:.5;}100%{transform:translate(30px,-180px) rotate(18deg);opacity:0;}}
+@keyframes fs-scene-plum{0%,100%{transform:translate(-40px,10px) rotate(-8deg);}50%{transform:translate(20px,-35px) rotate(10deg);}}
+@keyframes fs-scene-neon{0%,20%,100%{opacity:0;transform:translateX(-50px);}25%,60%{opacity:.85;}85%{transform:translateX(180px);opacity:0;}}
+@keyframes fs-scene-terracotta{0%,100%{transform:scaleY(.94);opacity:.3;}50%{transform:scaleY(1.04);opacity:.65;}}
+@keyframes fs-scene-dune{from{transform:translate(-30px,10px) scaleX(.95);}to{transform:translate(45px,-20px) scaleX(1.1);}}
+/* Pause every nested orbit as well as its particle children. Off/reduced is a still scene. */
+body:not([data-view="app"]) .app-ambient .fs-theme-motion *,
+body[data-fx-paused="true"] .fs-theme-motion *,
+html[data-zs-fx-paused="true"] #zs-root .fs-theme-motion *{animation-play-state:paused!important;}
+body:is([data-motion="off"],[data-motion="reduced"]) .fs-theme-motion *{animation:none!important;}
+@media(prefers-reduced-motion:reduce){.fs-theme-motion *{animation:none!important;}}
+@media(max-width:800px){.app-ambient .fs-scene-stage{right:-200px;opacity:.6;}}
+
+/* Cold fronts: separate wind ribbons, windborne flakes and frosted edge crystals. */
+.fs-scene-gust{left:calc(-90px + var(--i)*65px);top:calc(90px + var(--i)*105px);width:430px;height:95px;border-top:1px solid var(--scene-soft);border-radius:50%;animation-name:fs-scene-wind;animation-duration:calc(7s + var(--i)*3s);animation-timing-function:linear;}
+.fs-scene-gust::after{content:"";position:absolute;left:65px;top:16px;width:70%;height:70%;border-top:1px solid var(--scene-soft);border-radius:50%;opacity:.6;}
+.fs-scene-frost-edge{right:calc(var(--i)*330px - 20px);top:calc(var(--i)*150px);width:160px;height:360px;transform-origin:right center;clip-path:polygon(100% 0,100% 100%,76% 83%,85% 72%,49% 66%,72% 56%,31% 46%,70% 42%,40% 25%,80% 29%,61% 12%);background:linear-gradient(90deg,transparent,var(--scene-soft));animation-name:fs-scene-frost;animation-duration:calc(17s + var(--i)*6s);}
+.fs-scene-frost-edge::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(32deg,transparent 0 32px,var(--scene-soft) 33px 34px,transparent 35px 55px),repeating-linear-gradient(-35deg,transparent 0 42px,var(--scene-soft) 43px 44px,transparent 45px 65px);}
+.fs-scene-ice-shard{left:var(--x);top:var(--y);width:calc(var(--size)*2.4);height:calc(var(--size)*4);clip-path:polygon(50% 0,100% 35%,70% 100%,20% 75%,0 35%);background:linear-gradient(125deg,var(--scene-color),transparent 70%);animation-name:fs-scene-ice-shard;animation-duration:calc(10s + var(--i)*3s);}
+[data-scene-theme="ice"] .fs-scene-snow{animation-name:fs-scene-blizzard;animation-duration:calc(7s + var(--i)*1.4s);height:2px;width:calc(var(--size)*1.5);border-radius:2px;}
+[data-scene-theme="ice"] .fs-scene-stage{top:10%;right:-15px;}
+[data-scene-theme="glacier"] .fs-scene-snow{animation-name:fs-scene-spindrift;animation-duration:calc(11s + var(--i)*1.7s);}
+[data-scene-theme="glacier"] .fs-scene-mist{animation-name:fs-scene-glacial-mist;animation-duration:18s;}
+[data-scene-theme="nord"] .fs-scene-snow{animation-name:fs-scene-nord-snow;animation-duration:calc(14s + var(--i)*1.3s);}
+[data-scene-theme="nord"] .fs-scene-mist{opacity:.3;}
+@keyframes fs-scene-wind{0%{opacity:0;transform:translate(-160px,35px) rotate(-10deg) scaleX(.65);}25%,65%{opacity:.65;}100%{opacity:0;transform:translate(210px,-55px) rotate(-5deg) scaleX(1.2);}}
+@keyframes fs-scene-frost{0%,100%{transform:scaleX(.86) scaleY(.95);opacity:.2;}50%{transform:scaleX(1.08) scaleY(1.03);opacity:.65;}}
+@keyframes fs-scene-blizzard{0%{transform:translate(-220px,110px) rotate(-16deg);opacity:0;}15%,80%{opacity:.7;}100%{transform:translate(260px,300px) rotate(12deg);opacity:0;}}
+@keyframes fs-scene-ice-shard{0%,100%{transform:translate(-12px,18px) rotate(-12deg);opacity:.15;}50%{transform:translate(20px,-25px) rotate(20deg);opacity:.65;}}
+@keyframes fs-scene-spindrift{0%{transform:translate(-150px,160px);opacity:0;}20%,70%{opacity:.55;}100%{transform:translate(220px,110px);opacity:0;}}
+@keyframes fs-scene-glacial-mist{0%,100%{transform:translate(-70px,20px) scaleX(.85);opacity:.15;}50%{transform:translate(65px,-10px) scaleX(1.15);opacity:.6;}}
+@keyframes fs-scene-nord-snow{0%{transform:translate(20px,-35px);opacity:0;}15%,80%{opacity:.45;}100%{transform:translate(-80px,560px);opacity:0;}}

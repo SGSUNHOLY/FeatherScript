@@ -1,0 +1,147 @@
+/* Local profiles and connected knowledge. */
+.local-badge {
+  display:inline-flex;
+  align-items:center;
+  flex:none;
+  padding:6px 9px;
+  border:1px solid var(--panel-line);
+  border-radius:0;
+  font-family:var(--font-mono);
+  font-size:8.5px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--panel-soft);
+  background:transparent;
+}
+
+.eyebrow {
+  display:block;
+  margin-bottom:5px;
+  font-family:var(--font-mono);
+  font-size:8.5px;
+  font-weight:600;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--mark);
+}
+
+.vault-panel {
+  position:relative;
+  overflow:hidden;
+}
+
+.vault-panel::before {
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:3px;
+  background:var(--mark);
+  opacity:.9;
+  pointer-events:none;
+}
+
+.vault-folder-row {
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.vault-folder-row input {
+  flex:1;
+  min-width:0;
+}
+
+.vault-folder-row button {
+  flex:none;
+}
+
+.vault-permission {
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:16px 0;
+  color:var(--panel-text);
+  font-size:12px;
+}
+
+.vault-permission input {
+  width:16px;
+  height:16px;
+  accent-color:var(--mark);
+}
+
+.vault-permission span {
+  display:grid;
+  gap:4px;
+}
+
+.vault-permission small {
+  color:var(--panel-soft);
+  font-size:11px;
+}
+
+.vault-buttons {
+  display:flex;
+  gap:9px;
+  flex:none;
+}
+
+.vault-buttons .primary-btn {
+  width:auto;
+  min-height:36px;
+  padding:8px 14px;
+  font-size:12px;
+}
+
+.profile-create {
+  display:flex;
+  gap:12px;
+  align-items:flex-end;
+  margin-top:16px;
+}
+
+.profile-create .field {
+  flex:1;
+  margin:0;
+}
+
+.profile-create button {
+  min-height:42px;
+}
+
+#profile-select {
+  width:100%;
+  min-height:44px;
+  border:1px solid var(--panel-line);
+  border-radius:0;
+  padding:10px 12px;
+  background:var(--panel-solid);
+  color:var(--panel-text);
+  font:inherit;
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+
+#profile-select:focus {
+  border-color:var(--ink);
+  box-shadow:inset 0 -2px 0 var(--mark);
+}
+
+.profile-fields {
+  grid-template-columns:1fr;
+}
+
+#profiles-status {
+  display:block;
+  min-height:18px;
+  margin-bottom:0;
+}
+
+.is-profile-changing {
+  pointer-events:none;
+}
+
+[data-page="memory"] .panel-tall textarea {
+  min-height:230px;
+  height:clamp(230px,32vh,340px);
+}

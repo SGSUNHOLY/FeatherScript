@@ -1,0 +1,13 @@
+# Auto Playtest, capture safeguards and DeepSeek pacing
+
+Open Cowork in the extension controller to configure these options. Both toggles default to off and persist locally. Auto Playtest is snapshotted when a task starts; it never affects AgentScript PC tasks.
+
+Auto Playtest runs after confirmed Roblox edits and normal validation. It first checks whether Play is already running, starts it if needed, then collects server/client inventories of scripts, RemoteEvents/RemoteFunctions and interactables, console evidence, and a viewport capture on image-capable providers. It leaves Play running. Missing tools are explicitly untested. Cancellation or an uncertain start is not retried automatically. Failed checks and observed error-like console text pause Cowork progression. The evidence is sent to the selected AI for a completion report. Latest structured evidence is available in Cowork, including cancelled/incomplete runs.
+
+This is a bounded smoke test, not exhaustive testing. Inventorying a RemoteEvent does not exercise its handlers; interactables and gameplay need task-specific assertions. Console error detection is heuristic and its evidence must be reviewed. A successful tool call is not a guarantee that the game has no bugs. Reports must not claim universal zero bugs.
+
+DeepSeek conservative pacing is available only on DeepSeek: at least four seconds between injected send attempts in that tab, with a fresh error check before sending. Visible rate-limit, account restriction and verification notices stop automated progression. It does not disguise input, bypass verification or promise ban prevention. Manual messages and other tabs are outside this local pacing gate.
+
+Capture safeguards decode images and reject transparent or uniformly near-black frames before they are forwarded as visual evidence. A truly dark scene can trigger this diagnostic: inspect Studio's viewport, camera and lighting before recapturing. This does not repair the upstream Studio MCP screen_capture implementation. Arena now refuses to send capture feedback as text-only when image staging fails, instead of silently losing the image. Arena model support varies; live uploads and source capture still require testing on the user's selected model/session.
+
+Validation: all 12 provider contracts, send-loop regressions, task/queue tests and the full-core nine-scenario Chromium harness passed. Additional focused tests cover already-playing preservation, start/cancellation failures, missing-tool coverage, console issues and blank versus visible image detection. These are controlled fixtures, not authenticated live gameplay tests.

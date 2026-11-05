@@ -1,0 +1,104 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs/promises');
+const os = require('node:os');
+const path = require('node:path');
+const {ComputerAccess,normalize,inside} = require('./computer-access');
+const origin = 'chrome-extension://' + 'a'.repeat(32), stranger = 'chrome-extension://' + 'b'.repeat(32);
+(async()=>{
+  const directory=await fs.mkdtemp(path.join(os.tmpdir(),'fs-pc-test-'));
+  let asks=0, choice={allow:true,pair:true}, duringApproval=null;
+  const pc=new ComputerAccess({directory,approve:async request=>{asks++;if(duringApproval)await duringApproval(request);return choice;},trash:async()=>{throw Error('Not tested against real trash');},open:async()=>''});
+  try {
+    assert.equal(pc.state().enabled,false);assert.equal(normalize().mode,'ask');
+    assert.throws(()=>normalize({mode:'never'}));assert.throws(()=>normalize({roots:['relative']}));
+    assert.equal(inside(path.join(directory,'a'),directory),true);assert.equal(inside(directory+'-other',directory),false);
+    await assert.rejects(pc.call('pc_system_info',{},origin),/disabled/);
+    await pc.configure({enabled:true,mode:'ask',roots:[directory],clients:[stranger]});
+    assert.equal(pc.policy.clients.length,0,'renderer cannot create pairing grants');
+    await assert.rejects(pc.call('pc_system_info',{},'https://example.com'),/extension/);
+    await pc.call('pc_system_info',{},origin);assert.equal(asks,1);assert.deepEqual(pc.policy.clients,[origin]);
+    await pc.call('pc_system_info',{},origin);assert.equal(asks,2,'Always ask includes paired extensions');
+    await pc.configure({enabled:true,mode:'unusual',roots:[directory]});
+    const file=path.join(directory,'sample.txt');await pc.call('pc_write_file',{path:file,text:'hello'},origin);
+    assert.equal(asks,2);assert.equal((await pc.call('pc_read_file',{path:file},origin)).text,'hello');
+    assert.equal((await pc.call('pc_list_directory',{path:directory},origin)).entries.some(item=>item.name==='sample.txt'),true);
+    await pc.call('pc_open_path',{path:file},origin);assert.equal(asks,3,'opening a file is unusual');
+    choice={allow:false};await assert.rejects(pc.call('pc_open_path',{path:file},origin),/denied/);assert.equal(pc.history[0].outcome,'denied');
+    const trusted=path.join(directory,'trusted'),outside=path.join(directory,'outside');
+    await fs.mkdir(trusted);await fs.mkdir(outside);await fs.writeFile(path.join(outside,'private.txt'),'outside');
+    const link=path.join(trusted,'linked');await fs.symlink(outside,link,process.platform==='win32'?'junction':'dir');
+    await pc.configure({enabled:true,mode:'unusual',roots:[trusted]});
+    await assert.rejects(pc.call('pc_read_file',{path:path.join(link,'private.txt')},origin),/denied/,'links cannot escape trusted roots without approval');
+    await assert.rejects(pc.call('pc_trash_path',{path:link},origin),/do not follow links/);
+    choice={allow:true,pair:true};await pc.configure({enabled:true,mode:'full',roots:[]});
+    await pc.call('pc_system_info',{},origin);assert.equal(asks,5);
+    await pc.call('pc_system_info',{},stranger);assert.equal(asks,6,'Full mode still requires first-time pairing');
+    const fresh='chrome-extension://'+'c'.repeat(32), persist=pc.persist;
+    pc.persist=()=>{throw Error('Disk full');};
+    await assert.rejects(pc.call('pc_system_info',{},fresh),/Disk full/);
+    assert.equal(pc.policy.clients.includes(fresh),false,'failed pairing cannot grant access');pc.persist=persist;
+    const result=await pc.call('pc_run_program',{program:process.execPath,args:['-e','process.stdout.write("test only")'],cwd:directory},origin);
+    assert.equal(result.exitCode,0);assert.equal(result.stdout,'test only');
+    const timeout=await pc.call('pc_run_program',{program:process.execPath,args:['-e','setInterval(()=>{},1000)'],cwd:directory,timeoutMs:1000},origin);
+    assert.equal(timeout.timedOut,true);assert.equal(pc.children.size,0);
+    const large=await pc.call('pc_run_program',{program:process.execPath,args:['-e','process.stdout.write("x".repeat(300000))'],cwd:directory},origin);
+    assert.equal(large.truncated,true);assert.ok(large.stdout.length<=262144);
+    await assert.rejects(pc.call('pc_write_file',{path:file,text:'x'.repeat(2097153)},origin),/2 MB/);
+    await assert.rejects(pc.call('pc_run_program',{program:'node',args:[5],cwd:directory},origin),/arguments/);
+    await pc.configure({enabled:true,mode:'ask',roots:[]});
+    duringApproval=async()=>{await pc.configure({enabled:false,mode:'ask',roots:[]});};
+    await assert.rejects(pc.call('pc_system_info',{},origin),/permissions changed/);duringApproval=null;
+    await pc.configure({enabled:true,mode:'full',roots:[]});pc.revoke(origin);assert.equal(pc.policy.clients.includes(origin),false);
+    await pc.start();const url=`http://127.0.0.1:${pc.port}`;
+    assert.equal((await fetch(url+'/status')).status,401);
+    assert.equal((await fetch(url+'/status',{headers:{'X-FS-PC-Token':'é'.repeat(64)}})).status,401);
+    const headers={'X-FS-PC-Token':pc.token,'Content-Type':'application/json'};
+    assert.equal((await (await fetch(url+'/status',{headers})).json()).enabled,true);
+    const answer=await fetch(url+'/call',{method:'POST',headers,body:JSON.stringify({tool:'pc_system_info',arguments:{},origin})});
+    assert.equal((await answer.json()).ok,true);
+    const blocked=await fetch(url+'/call',{method:'POST',headers,body:JSON.stringify({tool:'pc_system_info',origin:'https://evil.example'})});assert.equal(blocked.status,400);
+    const reloaded=new ComputerAccess({directory});assert.equal(reloaded.policy.mode,'full');assert.equal(reloaded.policy.clients.includes(origin),true);
+    const running=fetch(url+'/call',{method:'POST',headers,body:JSON.stringify({tool:'pc_run_program',arguments:{program:process.execPath,args:['-e','setInterval(()=>{},1000)'],cwd:directory},origin})});
+    const until=Date.now()+3000;while(pc.children.size===0 && Date.now()<until)await new Promise(resolve=>setTimeout(resolve,15));
+    assert.equal(pc.children.size,1);await pc.configure({enabled:false,mode:'ask',roots:[]});
+    assert.equal((await (await running).json()).result.cancelled,true,'disabling access cancels a running owned program');
+    await pc.configure({enabled:false,mode:'ask',roots:[path.join(directory,'deleted')]});assert.equal(pc.policy.enabled,false);
+    // Expanded tool set: inspection and edits keep the trusted-folder rule, while
+    // clipboard and URL actions always need approval.
+    const extra=await fs.mkdtemp(path.join(os.tmpdir(),'fs-pc-extra-'));
+    let extraAsks=0, clipboardText='seed', opened='';
+    const extraPc=new ComputerAccess({directory:extra,approve:async()=>{extraAsks++;return {allow:true,pair:true};},trash:async()=>{},open:async()=>'',openExternal:async url=>{opened=url;return '';},clipboard:{readText:()=>clipboardText,writeText:value=>{clipboardText=value;}}});
+    try {
+      const root=path.join(extra,'root');await fs.mkdir(root);
+      await extraPc.configure({enabled:true,mode:'unusual',roots:[root]});
+      const file=path.join(root,'notes.txt');
+      await extraPc.call('pc_write_file',{path:file,text:'one\ntwo\nthree'},origin);
+      assert.equal(extraAsks,1,'the first request pairs once');
+      const range=await extraPc.call('pc_read_file',{path:file,startLine:2,maxLines:1},origin);
+      assert.equal(range.text,'two');assert.equal(range.totalLines,3);
+      assert.equal((await extraPc.call('pc_stat_path',{path:file},origin)).type,'file');
+      assert.equal((await extraPc.call('pc_search_files',{path:root,pattern:'*.txt'},origin)).matches.length,1);
+      await extraPc.call('pc_append_file',{path:file,text:'\nfour'},origin);
+      await extraPc.call('pc_copy_path',{source:file,destination:path.join(root,'copy.txt')},origin);
+      assert.equal((await extraPc.call('pc_read_file',{path:path.join(root,'copy.txt')},origin)).text,'one\ntwo\nthree\nfour');
+      assert.equal(extraAsks,1,'trusted read, append and copy stay automatic after pairing');
+      await assert.rejects(extraPc.call('pc_copy_path',{source:file,destination:path.join(root,'copy.txt')},origin),/exists/);
+      await extraPc.call('pc_clipboard_read',{},origin);assert.equal(extraAsks,2,'clipboard reads always ask');
+      await extraPc.call('pc_clipboard_write',{text:'agent'},origin);assert.equal(clipboardText,'agent');assert.equal(extraAsks,3);
+      await extraPc.call('pc_open_url',{url:'https://example.com'},origin);assert.equal(opened,'https://example.com/');assert.equal(extraAsks,4);
+      await assert.rejects(extraPc.call('pc_open_url',{url:'file:///C:/Windows/win.ini'},origin),/http/);
+      await assert.rejects(extraPc.call('pc_search_files',{path:root},origin),/Pattern/);
+      const outside=await fs.mkdtemp(path.join(os.tmpdir(),'fs-pc-out-'));
+      try {
+        const before=extraAsks;
+        await extraPc.call('pc_copy_path',{source:file,destination:path.join(outside,'leaving.txt')},origin);
+        assert.equal(extraAsks,before+1,'copying outside a trusted folder needs approval');
+      } finally { await fs.rm(outside,{recursive:true,force:true}); }
+    } finally { extraPc.close();await fs.rm(extra,{recursive:true,force:true}); }
+    const profiles=require('./profile-store');const data=()=>({memory:'',notes:[],settings:{}});const store=profiles.migrate({},data);
+    assert.throws(()=>profiles.remove(store,store.activeProfileId),/at least one/);
+    const first=store.activeProfileId,second=profiles.create(store,{name:'Second'},data);profiles.remove(store,second.id);
+    assert.equal(store.activeProfileId,first);assert.equal(store.data[second.id],undefined);assert.equal(store.profiles.length,1);
+    console.log('PASS computer access: default off, origin checks, pairing, all permission modes, file bounds, program limits, revocation, HTTP authentication, profile removal');
+  }finally{pc.close();await fs.rm(directory,{recursive:true,force:true});}
+})().catch(error=>{console.error(error);process.exitCode=1;});

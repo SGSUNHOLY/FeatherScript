@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FeatherScript · Dashboard</title>
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="theme-presets.css">
+<link rel="stylesheet" href="audio.css">
+</head>
+<body>
+
+<div class="fs-shell">
+
+  <header class="fs-card fs-top">
+    <div class="fs-brand">
+      <span class="fs-mark" aria-hidden="true"></span>
+      <div class="fs-brand-txt">
+        <div class="fs-brand-line">
+          <span class="fs-wordmark">FeatherScript</span>
+          <span class="fs-ver" id="ver"></span>
+        </div>
+        <p class="fs-tagline">Roblox Studio agent inside the AI chat you already use. Open a chat site and press <b>Start</b> on the bar.</p>
+      </div>
+    </div>
+
+    <div class="fs-top-acts">
+      <span class="fs-pill" id="pill" data-tone="off"><span class="fs-pill-dot"></span><span id="pill-text">Connecting…</span></span>
+      <button type="button" class="fs-button fs-button-ghost" id="reconnect">Reconnect</button>
+      <button type="button" class="fs-button fs-button-primary" id="open-chat">Open AI chat</button>
+    </div>
+
+    <div class="fs-stats">
+      <div class="fs-stat"><b id="st-tools">—</b><span>commands</span></div>
+      <div class="fs-stat"><b id="st-studio">—</b><span>Roblox Studio</span></div>
+      <div class="fs-stat"><b id="st-servers">—</b><span>MCP servers</span></div>
+    </div>
+  </header>
+
+  <main class="fs-grid">
+
+    <section class="fs-card fs-menu">
+      <div class="fs-card-head">
+        <h2>Providers</h2>
+        <span class="fs-side" id="site-count"></span>
+      </div>
+      <p class="fs-note">Open a supported chat to use FeatherScript. Freebuff opens as an external website.</p>
+      <div class="fs-sites" id="sites"></div>
+    </section>
+
+    <section class="fs-card fs-menu">
+      <div class="fs-card-head">
+        <h2>Custom prompt</h2>
+      </div>
+      <p class="fs-note">Appended to the built-in system prompt on every new session. The core prompt is fixed.</p>
+      <textarea id="prompt" rows="6" spellcheck="false" placeholder="e.g. Always comment your Luau code. Prefer small modular scripts."></textarea>
+      <div class="fs-row">
+        <button type="button" class="fs-button fs-button-primary" id="save-prompt">Save prompt</button>
+        <span class="fs-flash" id="prompt-status" role="status"></span>
+      </div>
+    </section>
+
+    <section class="fs-card fs-menu fs-span-2">
+      <div class="fs-card-head"><h2>Appearance</h2><span class="fs-side" id="theme-label">Follow page</span></div>
+      <p class="fs-note">One palette for your dashboard, controller and tool cards. Changes apply instantly.</p>
+      <div class="fs-theme-grid" id="theme-picker" aria-label="Color theme"></div>
+      <span class="fs-flash" id="theme-status" role="status"></span>
+    </section>
+
+    <section class="fs-card fs-menu fs-span-2">
+      <div class="fs-card-head"><h2>Obsidian vault</h2><span class="fs-side" id="vault-connection">Not connected</span></div>
+      <p class="fs-note">Let FeatherScript list, read and search your local Markdown notes. Choose your existing vault folder on this computer.</p>
+      <form id="vault-form" class="fs-vault-form">
+        <label for="vault-path">Vault folder</label>
+        <input id="vault-path" type="text" placeholder="Full path to your Obsidian vault" autocomplete="off" spellcheck="false">
+        <label class="fs-check"><input id="vault-write" type="checkbox"> Allow creating and updating notes</label>
+        <div class="fs-row"><button class="fs-button fs-button-primary" id="vault-save" type="submit">Connect vault</button><button class="fs-button fs-button-ghost" id="vault-disconnect" type="button">Disconnect</button><span id="vault-status" class="fs-flash" role="status"></span></div>
+      </form>
+    </section>
+
+    <section class="fs-card fs-menu fs-span-2">
+      <div class="fs-card-head">
+        <h2>MCP servers</h2>
+        <span class="fs-side" id="mcp-count"></span>
+      </div>
+      <p class="fs-note">Roblox Studio is the primary server, with headless Blender, PC control and your Obsidian vault shipped beside it. Add any other MCP server as an addon; the bridge restarts briefly to load it.</p>
+      <div class="fs-mcp" id="mcp-list"></div>
+      <div class="fs-mcp-form">
+        <input id="mcp-name" type="text" placeholder="Name, e.g. Sketchfab" autocomplete="off">
+        <input id="mcp-cmd" type="text" placeholder="MCP server start command" autocomplete="off" spellcheck="false">
+        <button type="button" class="fs-button fs-button-primary" id="mcp-add">Add server</button>
+      </div>
+      <div class="fs-row">
+        <span class="fs-flash" id="mcp-status" role="status"></span>
+      </div>
+    </section>
+
+    <section class="fs-card fs-menu">
+      <div class="fs-card-head">
+        <h2>Commands</h2>
+        <span class="fs-side" id="tools-count"></span>
+      </div>
+      <p class="fs-note">Live from the bridge — what the agent can call right now.</p>
+      <div class="fs-chips" id="tools"></div>
+    </section>
+
+    <section class="fs-card fs-menu">
+      <div class="fs-card-head">
+        <h2>Settings</h2>
+      </div>
+      <div class="fs-setting">
+        <div class="fs-setting-txt"><b>Bridge</b><span>ws://127.0.0.1:17613</span></div>
+        <button type="button" class="fs-button fs-button-ghost" id="set-reconnect">Reconnect</button>
+      </div>
+      <div class="fs-setting">
+        <div class="fs-setting-txt"><b>Roblox server</b><span>Restart the Studio MCP connection</span></div>
+        <button type="button" class="fs-button fs-button-ghost" id="set-restart">Restart</button>
+      </div>
+      <section class="fs-audio-controls" aria-label="Ambient music">
+  <span class="fs-audio-title"><span class="fs-audio-disc" aria-hidden="true">♫</span> Ambient music</span>
+  <button type="button" data-fs-music aria-pressed="false"><span aria-hidden="true">♫</span><span data-audio-caption>Play</span></button>
+  <label class="fs-audio-volume">Volume <input type="range" data-fs-volume min="0" max="100" value="50" aria-label="Ambient music volume"><output data-fs-volume-value>50%</output></label>
+  <span data-fs-audio-status role="status" aria-live="polite">Music paused · press Play to listen</span>
+</section>
+      <div class="fs-setting">
+        <div class="fs-setting-txt"><b>Sound effects</b><span>Small blips in the toolbar popup</span></div>
+        <button type="button" class="fs-switch" id="set-sound" data-fs-sound role="switch" aria-checked="true"><span></span></button>
+      </div>
+      <div class="fs-setting">
+        <div class="fs-setting-txt"><b>Setup guide</b><span>Show the bridge setup card again</span></div>
+        <button type="button" class="fs-button fs-button-ghost" id="set-setup">Show again</button>
+      </div>
+      <div class="fs-row"><span class="fs-flash" id="set-status" role="status"></span></div>
+    </section>
+
+    <section class="fs-card fs-menu fs-span-2">
+      <div class="fs-card-head">
+        <h2>Support FeatherScript</h2>
+        <span class="fs-side">free forever</span>
+      </div>
+      <div class="fs-support">
+        <a class="fs-tip" href="https://github.com/sebattfg/ZeroScript-Free" target="_blank" rel="noopener">
+          <b>Star on GitHub</b><span>free, helps a lot</span>
+        </a>
+        <a class="fs-tip" href="https://discord.gg/D5G2HAzX8z" target="_blank" rel="noopener">
+          <b>Join the Discord</b><span>help &amp; updates</span>
+        </a>
+        <a class="fs-tip" href="https://ko-fi.com/sebattfg" target="_blank" rel="noopener">
+          <b>Tip on Ko-fi</b><span>any amount</span>
+        </a>
+        <a class="fs-tip" href="https://work.ink/2JXi/zeroscript-free-roblox-ai-coding-tool" target="_blank" rel="noopener">
+          <b>Watch an ad</b><span>free, takes a minute</span>
+        </a>
+      </div>
+      <div class="fs-rbx" id="rbx"></div>
+    </section>
+
+  </main>
+
+  <footer class="fs-foot">
+    <span>FeatherScript Free · <span id="foot-ver"></span></span>
+    <span>Local bridge · your code never leaves your machine.</span>
+  </footer>
+</div>
+
+<script src="core/server-status.js"></script>
+<script src="core/theme-presets.js"></script>
+<script src="core/theme.js"></script>
+<script src="core/audio-ui.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

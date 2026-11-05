@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="audio.css">
+  <style>
+    /* A printed issue of the field manual: paper, hairline rules, a red
+       editorial pen and one highlighter. No floating cards, no gradients
+       pretending to be light. */
+    :root {
+      color-scheme: light;
+      --paper: #efe8d6;
+      --paper-hi: #fbf6e8;
+      --paper-lo: #e3d9c0;
+      --ink: #191307;
+      --ink-soft: #5b4f36;
+      --ink-faint: #87795a;
+      --line: rgba(25, 19, 7, .18);
+      --line-strong: rgba(25, 19, 7, .52);
+      --pen: #b3421f;
+      --hl: #f1d377;
+      --ok: #2f6b3a;
+      --warn: #8a5e10;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --sans: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+      --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+      font: 13px/1.5 var(--sans);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color-scheme: dark;
+        --paper: #0e0b06;
+        --paper-hi: #17120a;
+        --paper-lo: #080604;
+        --ink: #f2e9d4;
+        --ink-soft: #b6a988;
+        --ink-faint: #867a60;
+        --line: rgba(242, 233, 212, .16);
+        --line-strong: rgba(242, 233, 212, .44);
+        --pen: #ff9a7a;
+        --hl: #f5d268;
+        --ok: #7fd39b;
+        --warn: #e0b25c;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      width: 740px; height: 590px; margin: 0; overflow: hidden;
+      color: var(--ink);
+      background:
+        repeating-linear-gradient(180deg, transparent 0 31px, color-mix(in srgb, var(--ink) 2.6%, transparent) 31px 32px),
+        var(--paper);
+    }
+    .sheet { position: relative; display: flex; flex-direction: column; height: 100%; }
+    /* Registration marks: two corners, like a sheet leaving the press. */
+    .sheet::before, .sheet::after {
+      content: ""; position: absolute; width: 14px; height: 14px; pointer-events: none; opacity: .55;
+    }
+    .sheet::before {
+      left: 10px; top: 10px;
+      border-left: 1px solid var(--ink-faint); border-top: 1px solid var(--ink-faint);
+    }
+    .sheet::after {
+      right: 10px; bottom: 10px;
+      border-right: 1px solid var(--ink-faint); border-bottom: 1px solid var(--ink-faint);
+    }
+
+    /* ── masthead ───────────────────────────────────────────── */
+    .masthead { display: flex; align-items: center; gap: 12px; padding: 20px 28px 12px; }
+    .mark {
+      width: 40px; height: 40px; flex: none; object-fit: cover; border-radius: 0;
+      border: 1px solid var(--line-strong); filter: grayscale(.2) contrast(1.06);
+    }
+    .mast-title { min-width: 0; }
+    .mast-title strong {
+      display: block; font-family: var(--serif); font-size: 21px; font-weight: 600;
+      letter-spacing: -.02em; line-height: 1.1;
+    }
+    .mast-title span {
+      display: block; margin-top: 3px; font: 8.5px/1 var(--mono); font-weight: 500;
+      letter-spacing: .24em; text-transform: uppercase; color: var(--ink-faint);
+    }
+    .connection {
+      display: inline-flex; align-items: center; gap: 7px; margin-left: 4px;
+      padding: 4px 8px; border: 1px solid var(--line); border-radius: 2px;
+      font: 8.5px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ink-soft); background: var(--paper-hi); white-space: nowrap;
+    }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-faint); flex: none; }
+    .dot.on { background: var(--ok); }
+    .dot.warn { background: var(--warn); }
+    .spacer { flex: 1; }
+    .mast-actions { display: flex; gap: 8px; }
+
+    button, a { font: inherit; }
+    button { color: inherit; cursor: pointer; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 34px; padding: 0 13px; border: 1px solid var(--line-strong);
+      border-radius: 3px; background: var(--paper-hi); color: var(--ink);
+      font: 600 9.5px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+      transition: transform .16s, background-color .16s, border-color .16s;
+    }
+    .btn:hover { background: color-mix(in srgb, var(--hl) 42%, var(--paper-hi)); border-color: var(--ink); }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .btn-primary:hover { background: var(--pen); border-color: var(--pen); color: var(--paper-hi); }
+    .btn-icon { width: 34px; padding: 0; font-size: 13px; letter-spacing: 0; }
+    .btn-icon[aria-pressed="true"] { background: color-mix(in srgb, var(--hl) 55%, var(--paper-hi)); border-color: var(--ink); }
+
+    /* ── issue line ─────────────────────────────────────────── */
+    .issue {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+      margin: 0 28px; padding-bottom: 8px; border-bottom: 3px double var(--line-strong);
+      font: 8.5px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint);
+    }
+    .issue b { color: var(--ink-soft); font-weight: 500; }
+
+    /* ── editorial block ────────────────────────────────────── */
+    main { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 16px 28px 0; overflow-y:auto; scrollbar-width:thin; }
+    .kicker {
+      margin: 0; font: 9px/1 var(--mono); letter-spacing: .2em;
+      text-transform: uppercase; color: var(--pen);
+    }
+    h1 {
+      margin: 7px 0 9px; font-family: var(--serif); font-size: 34px; line-height: 1.02;
+      font-weight: 600; letter-spacing: -.035em;
+    }
+    h1 em { position: relative; font-style: normal; z-index: 0; }
+    h1 em::after {
+      content: ""; position: absolute; z-index: -1; left: -.04em; right: -.06em;
+      bottom: .08em; height: .42em; background: var(--hl); opacity: .72;
+      transform: rotate(-.7deg);
+    }
+    .sub { margin: 0; max-width: 470px; color: var(--ink-soft); font-size: 12.5px; }
+
+    /* ── contents index ─────────────────────────────────────── */
+    .index { margin-top: 10px; border-top: 1px solid var(--line-strong); flex-shrink:0; }
+    .index-head {
+      display: flex; justify-content: space-between; padding: 7px 2px 6px;
+      font: 8px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-faint);
+    }
+    .provider {
+      display: grid; grid-template-columns: 30px minmax(0, 1fr) auto 18px; align-items: center;
+      gap: 12px; padding: 8px 2px; border-bottom: 1px solid var(--line);
+      color: var(--ink); text-decoration: none;
+      transition: background-color .16s, padding-left .16s;
+    }
+    .provider .num { font: 9px/1 var(--mono); color: var(--pen); letter-spacing: .06em; }
+    .provider .label { font-family: var(--serif); font-size: 16px; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .provider .host {
+      font: 8.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint);
+    }
+    .provider .arrow { justify-self: end; font-size: 14px; color: var(--ink-faint); transition: transform .16s, color .16s; }
+    .provider:hover {
+      background: linear-gradient(90deg, color-mix(in srgb, var(--hl) 62%, transparent), transparent 78%);
+      padding-left: 6px;
+    }
+    .provider:hover .label { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+    .provider:hover .arrow { transform: translateX(4px); color: var(--pen); }
+    .provider:active { background: color-mix(in srgb, var(--hl) 40%, transparent); }
+
+    /* ── status strip ───────────────────────────────────────── */
+    main>.fs-audio-controls{flex-shrink:0;padding:9px 12px;margin-top:8px;gap:8px;}
+    .status {
+      display: flex; align-items: center; gap: 10px; margin-top: auto; padding: 12px 0 8px;
+      font: 9px/1.4 var(--mono); letter-spacing: .08em; color: var(--ink-soft);
+    }
+    .status .lead { flex: none; text-transform: uppercase; letter-spacing: .18em; color: var(--ink-faint); }
+    .status .dots { flex: 1; height: 1px; background: repeating-linear-gradient(90deg, var(--line-strong) 0 3px, transparent 3px 7px); }
+    .utilities { display: flex; gap: 15px; padding-bottom: 12px; }
+    .utilities button {
+      padding: 0; border: 0; background: none; color: var(--ink-faint);
+      font: 8.5px/1.5 var(--mono); letter-spacing: .06em; text-transform: uppercase;
+      text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px;
+    }
+    .utilities button:hover { color: var(--pen); text-decoration-color: var(--pen); }
+    .utilities button:disabled { cursor: progress; color: var(--ink-faint); opacity: .7; }
+
+    /* ── footer ─────────────────────────────────────────────── */
+    .footer {
+      flex: none; display: flex; align-items: center; gap: 8px; min-height: 32px;
+      padding: 0 28px; border-top: 1px solid var(--line); color: var(--ink-faint);
+      font: 8px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+    }
+    .footer .version { margin-left: 2px; color: var(--ink-soft); letter-spacing: .08em; }
+    .footer .servers {
+      margin-left: auto; max-width: 280px; overflow: hidden; white-space: nowrap;
+      text-overflow: ellipsis; text-transform: none; letter-spacing: 0;
+    }
+
+    .toast {
+      position: absolute; left: 28px; bottom: 44px; max-width: 300px;
+      padding: 7px 11px; border: 1px solid var(--ink); border-radius: 3px;
+      background: var(--paper-hi); color: var(--ink);
+      font: 9px/1.5 var(--mono); letter-spacing: .06em; text-transform: uppercase;
+      opacity: 0; transform: translateY(6px); pointer-events: none;
+      transition: opacity .18s, transform .18s;
+    }
+    .toast.show { opacity: 1; transform: none; }
+    :focus-visible { outline: 2px solid var(--pen); outline-offset: 3px; }
+    .dot.pulse { animation: ping .7s ease-out; }
+    @keyframes ping { from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 60%, transparent); } to { box-shadow: 0 0 0 9px transparent; } }
+
+    @media (max-width: 620px) {
+      body { width: 390px; }
+      .masthead { padding: 16px 18px 10px; gap: 9px; }
+      .mast-title span { display: none; }
+      .issue { margin: 0 18px; }
+      main { padding: 16px 18px 0; }
+      h1 { font-size: 33px; }
+      .provider .host { display: none; }
+      .provider { grid-template-columns: 26px minmax(0, 1fr) 16px; gap: 9px; }
+      .footer { padding: 0 18px; }
+      .footer .servers { max-width: 150px; }
+    }
+    @media (max-width: 430px) {
+      .connection { border: 0; background: none; padding: 0; }
+      .connection #state { display: none; }
+      .btn-primary { width: 34px; padding: 0; font-size: 0; }
+      .btn-primary svg { width: 17px; height: 17px; }
+      .mast-actions { gap: 6px; }
+      .utilities { gap: 10px; flex-wrap: wrap; row-gap: 4px; }
+      .footer .servers { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <header class="masthead">
+      <img class="mark" src="assets/feather-mark.png" alt="" />
+      <div class="mast-title"><strong>FeatherScript</strong><span>Companion · Local bridge</span></div>
+      <div class="connection" aria-live="polite"><span id="dot" class="dot" aria-hidden="true"></span><span id="state">Checking…</span></div>
+      <span class="spacer"></span>
+      <div class="mast-actions">
+        <button class="btn btn-primary" id="start" title="Open a supported AI chat"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9 17h6M2 12v4M22 12v4"/></svg>Start Agent</button>
+        <button class="btn btn-icon" id="sound" data-fs-sound aria-label="Sound effects off" aria-pressed="false" title="Toggle sound effects" type="button"><span aria-hidden="true">♬</span></button>
+        <button class="btn btn-icon" id="settings" aria-label="Open settings" title="Settings" type="button"><span aria-hidden="true">⚙</span></button>
+      </div>
+    </header>
+
+    <div class="issue">
+      <span><b>Vol. 2</b> · A field manual for building in Roblox</span>
+      <span>Free edition</span>
+    </div>
+
+    <main>
+      <p class="kicker">№ 01 — The desk</p>
+      <h1>What are we <em>building</em> today?</h1>
+      <p class="sub">Your companion reads and writes through the local bridge. Pick an entry below to open a chat that already has the kit.</p>
+
+      <nav class="index" aria-label="Choose an AI provider">
+        <p class="index-head"><span>Entry</span><span>Provider</span></p>
+        <a class="provider" data-url="https://chat.deepseek.com/" href="https://chat.deepseek.com/">
+          <span class="num">01</span>
+          <span class="label">Help me write a script</span>
+          <span class="host">DeepSeek</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="provider" data-url="https://chatgpt.com/" href="https://chatgpt.com/">
+          <span class="num">02</span>
+          <span class="label">Debug my code</span>
+          <span class="host">ChatGPT</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="provider" data-url="https://gemini.google.com/app" href="https://gemini.google.com/app">
+          <span class="num">03</span>
+          <span class="label">Explain something</span>
+          <span class="host">Gemini</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="provider" data-url="https://www.kimi.ai/" href="https://www.kimi.ai/">
+          <span class="num">04</span>
+          <span class="label">Build a new feature</span>
+          <span class="host">Kimi</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </nav>
+
+      <section class="fs-audio-controls" aria-label="Ambient music">
+  <span class="fs-audio-title"><span class="fs-audio-disc" aria-hidden="true">♫</span> Ambient music</span>
+  <button type="button" data-fs-music aria-pressed="false"><span aria-hidden="true">♫</span><span data-audio-caption>Play</span></button>
+  <label class="fs-audio-volume">Volume <input type="range" data-fs-volume min="0" max="100" value="50" aria-label="Ambient music volume"><output data-fs-volume-value>50%</output></label>
+  <span data-fs-audio-status role="status" aria-live="polite">Music paused · press Play to listen</span>
+</section>
+      <div class="status"><span class="lead">Bridge</span><span class="dots" aria-hidden="true"></span><span id="tools">Connecting to your local bridge…</span></div>
+      <div class="utilities">
+        <button id="reconnect" type="button">Reconnect bridge</button>
+        <button id="restart" type="button">Restart Roblox server</button>
+        <button id="kofi" type="button">Support</button>
+      </div>
+    </main>
+
+    <footer class="footer"><span>Build faster · think deeper</span><span class="version" id="ver"></span><span class="servers" id="servers"></span></footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script src="core/audio-ui.js"></script>
+  <script src="core/server-status.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+/* FeatherScript startup: the cover page of the field manual. */
+body[data-view="boot"] {
+  background: var(--paper, #f2ecdc);
+}
+
+.boot-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 89;
+  display: grid;
+  place-items: center;
+  background: var(--paper, #f2ecdc);
+  color: var(--ink, #171208);
+  overflow: hidden;
+  transition: opacity .24s, transform .24s var(--ease);
+}
+
+.boot-screen[hidden] {
+  display: none;
+}
+
+.boot-screen.is-leaving {
+  opacity: 0;
+  transform: scale(1.025);
+  pointer-events: none;
+}
+
+/* Registration marks in opposite corners of the sheet. */
+.boot-screen::before,
+.boot-screen::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--mark, #b3421f), var(--mark, #b3421f)),
+    linear-gradient(var(--mark, #b3421f), var(--mark, #b3421f));
+  background-repeat: no-repeat;
+}
+
+.boot-screen::before {
+  top: 26px;
+  left: 26px;
+  background-size: 22px 1px, 1px 22px;
+  background-position: 0 0, 0 0;
+}
+
+.boot-screen::after {
+  right: 26px;
+  bottom: 26px;
+  background-size: 22px 1px, 1px 22px;
+  background-position: 100% 100%, 100% 100%;
+}
+
+.boot-grain {
+  position: absolute;
+  inset: 0;
+  opacity: .7;
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent 0 31px,
+    color-mix(in srgb, var(--ink) 5%, transparent) 31px 32px
+  );
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, black, transparent 74%);
+}
+
+.boot-content {
+  position: relative;
+  width: min(440px, 85vw);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boot-kicker {
+  font: 600 8.5px var(--font-mono);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.boot-emblem {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  margin: 30px 0 28px;
+  display: grid;
+  place-items: center;
+  background: var(--panel-solid);
+  border: 1px solid var(--line-strong);
+  box-shadow: 6px 6px 0 var(--highlight);
+}
+
+.boot-feather {
+  width: 54px;
+  height: 48px;
+  background: var(--mark);
+  mask: url(../assets/feather-glyph.png) center/contain no-repeat;
+  -webkit-mask: url(../assets/feather-glyph.png) center/contain no-repeat;
+  animation: quill-float 2.4s ease-in-out infinite;
+}
+
+.boot-orbit {
+  position: absolute;
+  inset: -13px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+}
+
+.boot-orbit::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 17px;
+  height: 17px;
+  border-top: 2px solid var(--mark);
+  border-left: 2px solid var(--mark);
+}
+
+.boot-content h1 {
+  margin: 0;
+  font: normal 46px/1.05 var(--font-serif);
+  letter-spacing: -.045em;
+}
+
+.boot-title-dot {
+  color: var(--mark);
+}
+
+.boot-copy {
+  margin: 12px 0 30px;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+.boot-track {
+  width: 190px;
+  height: 3px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.boot-track span {
+  display: block;
+  width: 42%;
+  height: 100%;
+  background: var(--mark);
+  animation: quill-track 1.2s ease-in-out infinite;
+}
+
+.boot-status {
+  min-height: 36px;
+  margin: 15px 0 6px;
+  max-width: 380px;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.boot-stages {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font: 8.5px var(--font-mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.boot-stages span {
+  opacity: .4;
+  transition: opacity .2s, color .2s;
+}
+
+.boot-stages .is-ready {
+  opacity: 1;
+  color: var(--ink);
+}
+
+.boot-stages i {
+  width: 14px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.boot-foot {
+  position: absolute;
+  bottom: 28px;
+  left: 32px;
+  right: 32px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-soft);
+  font: 8px var(--font-mono);
+  letter-spacing: .14em;
+}
+
+#boot-retry {
+  margin-top: 20px;
+}
+
+.boot-screen[aria-busy="false"] .boot-track span {
+  animation: none;
+  width: 100%;
+}
+
+@keyframes quill-float {
+  0%, 100% {
+    transform: translateY(2px) rotate(-6deg);
+  }
+
+  50% {
+    transform: translateY(-3px) rotate(2deg);
+  }
+}
+
+@keyframes quill-track {
+  0% {
+    transform: translateX(-110%);
+  }
+
+  100% {
+    transform: translateX(350%);
+  }
+}
+
+#boot-retry[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot-screen {
+    transition: none;
+  }
+
+  .boot-feather,
+  .boot-track span {
+    animation: none;
+  }
+
+  .boot-track span {
+    width: 100%;
+  }
+}

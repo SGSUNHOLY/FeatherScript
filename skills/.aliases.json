@@ -1,0 +1,24 @@
+{
+  "api-watchlist": "luau-accuracy",
+  "luau-lint-review": "luau-accuracy",
+  "map-placement": "roblox-map",
+  "roblox-audio": "roblox-sfx",
+  "client-ui-safety": "roblox-ui",
+  "expert-gui": "roblox-ui",
+  "vfx-and-animation": "roblox-vfx-mastery",
+  "roblox-vfx": "roblox-vfx-mastery",
+  "check-cycle": "ul-check-suite",
+  "gui-verify": "ul-check-suite",
+  "roblox-build-orchestrator": {
+    "folder": "ul-game-pipeline",
+    "files": {
+      "references/stage-briefs.md": "references/build-stage-briefs.md",
+      "references/write-boundary.md": "references/build-write-boundary.md"
+    }
+  },
+  "project-layout": "ul-luau-code",
+  "roblox-texture-gen": "ul-texture-gen",
+  "check-ui-rules": "ul-ui-builder",
+  "check-ui-standard": "ul-check-suite",
+  "reference-library": "roblox-studio-setup"
+}

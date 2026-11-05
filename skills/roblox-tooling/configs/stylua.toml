@@ -1,0 +1,6 @@
+# Formatting. Tabs, a 120 column limit, double quotes where possible.
+column_width = 120
+indent_type = "Tabs"
+indent_width = 4
+quote_style = "AutoPreferDouble"
+call_parentheses = "Always"

@@ -1,0 +1,15 @@
+{
+  "name": "featherscript-app",
+  "productName": "FeatherScript",
+  "version": "2.0.1",
+  "private": true,
+  "description": "FeatherScript desktop app - local profiles, memory, vaults and the Roblox Studio bridge.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "node scripts/test.js"
+  },
+  "devDependencies": {
+    "electron": "45.2.1"
+  }
+}

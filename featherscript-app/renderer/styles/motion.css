@@ -1,0 +1,61 @@
+/* Brief, event-driven motion: no animation library, timers or permanent layers. */
+.ai-card { overflow: hidden; isolation: isolate; }
+.panel:focus-within { border-color: color-mix(in srgb, var(--mark) 45%, var(--panel-line)); }
+.editor:focus-visible { outline: 2px solid var(--mark); outline-offset: 3px; }
+
+@media (prefers-reduced-motion:no-preference) {
+  .page.is-active .panel-head > div { animation: fs-card-arrive .3s var(--ease) backwards; }
+  .sheet.is-open .sheet-body > * { animation: fs-card-arrive .28s var(--ease) backwards; }
+  .sheet.is-open .sheet-body > :nth-child(2) { animation-delay:45ms; }
+  .toast.show { animation: fs-toast-arrive .25s var(--ease); }
+  .mcp-toggle input:checked { animation: fs-pick .22s var(--ease); }
+  .panel { transition: border-color .18s; }
+  .page.is-active .ai-card {
+    animation: fs-card-arrive .32s var(--ease) backwards;
+    animation-delay: calc(var(--card-order, 0) * 14ms);
+  }
+  .page.is-active .stat-card { animation: fs-card-arrive .36s var(--ease) backwards; }
+  .page.is-active .stat-card:nth-child(2) { animation-delay: 35ms; }
+  .page.is-active .stat-card:nth-child(3) { animation-delay: 70ms; }
+  .page.is-active .stat-card:nth-child(4) { animation-delay: 105ms; }
+  .nav-item.is-active .nav-symbol { animation: fs-ink-settle .26s var(--ease); }
+  .theme-card.is-active .theme-preview { animation: fs-ink-settle .26s var(--ease); }
+  .theme-card.is-active .theme-pick { animation: fs-pick .24s var(--ease); }
+  .overview-command-drawer[open] > :not(summary) { animation: fs-card-arrive .22s var(--ease); }
+  .save-state.show { animation: fs-card-arrive .2s var(--ease); }
+
+  @keyframes fs-card-arrive {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fs-ink-settle {
+    0% { opacity: .35; transform: translateX(-3px); }
+    100% { opacity: 1; transform: none; }
+  }
+
+  @keyframes fs-pick {
+    0% { transform: scale(.65); }
+    70% { transform: scale(1.14); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes fs-toast-arrive {
+    from { opacity: 0; transform: translate(-50%, 8px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+}
+
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
+  .ai-monogram { transition: transform .2s var(--ease); }
+  .ai-card:hover .ai-monogram { transform: translateY(-1px); }
+  .theme-preview { transition: transform .18s var(--ease); }
+  .theme-card:hover .theme-preview { transform: translateY(-2px); }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .nav-item:hover .nav-symbol,
+  .theme-card:hover .theme-preview {
+    transform: none;
+  }
+}

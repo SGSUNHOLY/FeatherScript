@@ -1,0 +1,71 @@
+/* A single static scene supplies depth across all layouts and pages. */
+.app-view { position:fixed; inset:0; min-height:0; isolation:isolate; background:transparent!important; }
+.app-ambient { position:fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden; background:var(--workspace); }
+.app-ambient::before { content:""; position:absolute; inset:-70px; background:radial-gradient(ellipse at 13% 15%,color-mix(in srgb,var(--accent) 24%,transparent),transparent 52%),radial-gradient(ellipse at 89% 67%,color-mix(in srgb,var(--accent) 17%,transparent),transparent 54%),radial-gradient(ellipse at 48% 110%,color-mix(in srgb,var(--ink-soft) 13%,transparent),transparent 50%); filter:blur(48px); }
+body.has-custom-scene .app-ambient::after {content:"";position:absolute;inset:-30px;background-image:var(--studio-scene);background-size:cover;background-position:center;filter:blur(22px);opacity:calc(1 - var(--studio-dim,.65));}
+body.has-custom-scene .workspace::before,body.has-custom-scene .workspace::after {display:none;}
+body .workspace {background:transparent;}
+body .sidebar {background:color-mix(in srgb,var(--sidebar) 80%,transparent);backdrop-filter:blur(20px);}
+/* A filtered ancestor would anchor Canvas's fixed dock to the header. */
+body[data-layout="canvas"] .sidebar {backdrop-filter:none;background:transparent;}
+body[data-layout="canvas"] .side-nav {backdrop-filter:blur(20px);}
+body .topbar {background:color-mix(in srgb,var(--workspace) 72%,transparent);backdrop-filter:blur(18px);}
+body .panel,body.has-custom-scene .panel {background:color-mix(in srgb,var(--panel-solid) 83%,transparent);backdrop-filter:blur(14px);}
+body .sheet-backdrop {backdrop-filter:blur(14px);}
+body .sheet-card {background:color-mix(in srgb,var(--panel-solid) 94%,transparent);backdrop-filter:blur(20px);}
+body .launch-hero {background:color-mix(in srgb,var(--panel-solid) 77%,transparent);}
+body .theme-card {background:color-mix(in srgb,var(--panel-solid) 86%,transparent);}
+/* Studio is a compact, glass command deck; the default sidebar is preserved. */
+body[data-layout="studio"] .app-view {grid-template-rows:112px minmax(0,1fr);}
+body[data-layout="studio"] .sidebar {margin:28px 20px 8px;padding:0 18px;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:68px;align-items:center;gap:22px;border:1px solid var(--panel-line);border-radius:20px;background:color-mix(in srgb,var(--panel-solid) 79%,transparent);box-shadow:0 12px 38px #0000000a,inset 0 1px 0 color-mix(in srgb,var(--ink) 5%,transparent);}
+body[data-layout="studio"] .side-brand {grid-column:1;grid-row:1;gap:8px;}
+body[data-layout="studio"] .side-word {font-size:18px;}
+body[data-layout="studio"] .side-mark {width:25px;height:27px;}
+body[data-layout="studio"] .side-profile {grid-column:3;grid-row:1;}
+body[data-layout="studio"] .side-who {display:none;}
+body[data-layout="studio"] .side-nav {position:relative;left:auto;bottom:auto;transform:none;width:auto;box-shadow:none;grid-column:2;grid-row:1;justify-self:center;max-width:100%;padding:4px;gap:3px;border:1px solid var(--panel-line);border-radius:13px;background:color-mix(in srgb,var(--workspace) 32%,transparent);}
+body[data-layout="studio"] .nav-item {flex:0 0 auto;flex-direction:row;min-width:0;padding:0 10px;height:39px;gap:6px;border-radius:9px;}
+body[data-layout="studio"] .nav-copy b {font-size:10px;}
+body[data-layout="studio"] .nav-symbol {width:15px;}
+body[data-layout="studio"] .nav-ink {border-radius:9px;background:color-mix(in srgb,var(--accent) 15%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 25%,transparent),0 3px 12px #0000000a;}
+body[data-layout="studio"] .topbar {width:calc(100% - 56px);padding:12px 0 18px;border-radius:12px;background:transparent;backdrop-filter:none;}
+body[data-layout="studio"] .pages {padding:0 28px 36px;}
+body[data-layout="studio"] .page {max-width:1440px;}
+body[data-layout="studio"] .launch-hero {min-height:280px;gap:24px;padding:30px;grid-template-columns:1.15fr .85fr;border:1px solid var(--panel-line);border-radius:22px;background:color-mix(in srgb,var(--panel-solid) 72%,transparent);backdrop-filter:blur(14px);}
+body[data-layout="studio"] .launch-hero h2 {font-size:clamp(36px,4.2vw,60px);letter-spacing:-.045em;max-width:650px;}
+body[data-layout="studio"] .launch-route {min-height:220px;border:1px solid var(--panel-line);border-radius:18px;background:color-mix(in srgb,var(--workspace) 45%,transparent);}
+body[data-layout="studio"] .launch-route::before,body[data-layout="studio"] .route-feather::after {display:none;}
+body[data-layout="studio"] .route-feather {width:66px;height:66px;border-radius:19px;}
+body[data-layout="studio"] .route-feather::before {width:32px;height:30px;}
+body[data-layout="studio"] .route-end {transform:none;}
+body[data-layout="studio"] .stats {margin-top:16px;border:1px solid var(--panel-line);border-radius:16px;background:color-mix(in srgb,var(--panel-solid) 70%,transparent);}
+body[data-layout="studio"] .stat-card {padding:18px 20px;}
+body[data-layout="studio"] .connection-actions {margin-bottom:16px;}
+body[data-layout="studio"] .workspace-shortcut {padding:17px;background:color-mix(in srgb,var(--panel-solid) 76%,transparent);}
+body[data-layout="studio"] .overview-command-drawer summary {background:color-mix(in srgb,var(--panel-solid) 78%,transparent);}
+body[data-layout="studio"] .page[data-page="settings"] {grid-template-columns:repeat(2,minmax(0,1fr));}
+body[data-layout="studio"] #layout-panel,body[data-layout="studio"] #computer-panel {grid-column:1/-1;}
+body[data-layout="studio"] .ai-grid {grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+body[data-layout="studio"] .ai-card {border:1px solid var(--panel-line);border-radius:14px;background:color-mix(in srgb,var(--panel-solid) 80%,transparent);padding:20px;}
+.blender-actions {display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.blender-path-row {display:flex;gap:8px;align-items:center;}
+.blender-path-row input {flex:1;min-width:0;}
+.blender-diagnostic {margin-top:12px;padding:12px 14px;border:1px solid var(--panel-line);border-radius:10px;font-size:12px;line-height:1.6;white-space:pre-line;user-select:text;}
+.blender-diagnostic[data-tone="ok"] {border-color:var(--ok);}
+.blender-diagnostic[data-tone="error"] {border-color:var(--danger);}
+.save-state[role="status"],#guide-count,#guide-empty,#theme-search-empty {opacity:1;transform:none;white-space:normal;line-height:1.6;}
+.mcp-actions:has(.blender-diagnostic) {display:block;}
+.blender-diagnostic {overflow-wrap:anywhere;}
+#blender-state {display:block;margin-top:10px;}
+::view-transition-old(root) {animation:layout-leave .16s ease-out both;}
+::view-transition-new(root) {animation:layout-arrive .32s cubic-bezier(.16,1,.3,1) both;}
+@keyframes layout-leave {to {opacity:0;transform:scale(.993);}}
+@keyframes layout-arrive {from {opacity:0;transform:translateY(7px) scale(1.005);}to {opacity:1;transform:none;}}
+@media(max-width:1120px) {body[data-layout="studio"] .sidebar {gap:12px;padding:0 12px;}body[data-layout="studio"] .side-word {font-size:16px;}body[data-layout="studio"] .nav-item {padding:0 8px;}body[data-layout="studio"] .side-profile .icon-btn {display:none;}}
+@media(max-width:960px) {body[data-layout="studio"] .app-view {grid-template-rows:148px minmax(0,1fr);}body[data-layout="studio"] .sidebar {grid-template-columns:1fr auto;grid-template-rows:46px 52px;margin:28px 12px 8px;}body[data-layout="studio"] .side-profile {grid-column:2;}body[data-layout="studio"] .side-nav {grid-column:1/-1;grid-row:2;justify-self:stretch;justify-content:space-between;}body[data-layout="studio"] .nav-item {padding:0 10px;}body[data-layout="studio"] .pages {padding:0 18px 28px;}body[data-layout="studio"] .launch-hero {padding:24px;}.blender-path-row {flex-wrap:wrap;}}
+@media(max-width:700px) {body[data-layout="studio"] .nav-item {padding:0 9px;}body[data-layout="studio"] .nav-copy {display:none;}body[data-layout="studio"] .nav-item.is-active .nav-copy {display:block;}body[data-layout="studio"] .topbar {width:calc(100% - 36px);}body[data-layout="studio"] .launch-hero {grid-template-columns:1fr;}body[data-layout="studio"] .page[data-page="settings"] {grid-template-columns:1fr;}}
+@media(prefers-reduced-motion:reduce) {::view-transition-old(root),::view-transition-new(root) {animation:none!important;}}
+body[data-motion="off"]::view-transition-old(root),body[data-motion="off"]::view-transition-new(root) {animation:none!important;}
+
+/* Keep long content inside the viewport-bound flex/grid scroll chain. */
+body .workspace,body .pages { min-height:0; }

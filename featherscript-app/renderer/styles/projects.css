@@ -1,0 +1,6 @@
+.project-group{margin:18px 0;}.project-group>h4{font-size:11px;text-transform:uppercase;letter-spacing:.12em;opacity:.65;margin:0 0 12px;}
+.project-memory-card{padding:18px;margin:10px 0;border:1px solid var(--line,#ffffff20);border-radius:14px;background:var(--surface-2,#ffffff04);}
+.project-memory-heading{display:flex;gap:12px;align-items:center;justify-content:space-between;}.project-memory-heading h4{margin:0;font-size:16px;overflow-wrap:anywhere;}
+.project-last-task{font-size:12px;line-height:1.6;overflow-wrap:anywhere;}.project-memory-card>small{display:block;opacity:.6;font-size:11px;}
+.project-memory-card details{margin:14px 0;font-size:11px;}.project-memory-card pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:260px;overflow:auto;line-height:1.6;font-size:11px;}
+.project-memory-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}.project-library-tools{display:flex;gap:10px;margin:14px 0;}.project-library-tools input{flex:1;min-width:0;}

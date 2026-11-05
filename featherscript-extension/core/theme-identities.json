@@ -1,0 +1,330 @@
+{
+  "default": {
+    "label": "Field notes",
+    "motif": "paper",
+    "radius": 14,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Warm ruled paper, a stamped sun and brass details."
+  },
+  "dark": {
+    "label": "Brass atelier",
+    "motif": "dial",
+    "radius": 12,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Etched brass dials and warm workshop lighting."
+  },
+  "midnight": {
+    "label": "Observatory",
+    "motif": "orbit",
+    "radius": 18,
+    "heading": "sans",
+    "edge": "solid",
+    "description": "Star charts, orbital arcs and a moonlit horizon."
+  },
+  "azure": {
+    "label": "Sky terminal",
+    "motif": "cloud",
+    "radius": 20,
+    "heading": "sans",
+    "edge": "solid",
+    "description": "Airflow lines, cloud contours and bright sky glass."
+  },
+  "purple": {
+    "label": "Astral lounge",
+    "motif": "orbit",
+    "radius": 24,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Nested planetary rings and soft astral light."
+  },
+  "violet": {
+    "label": "Prism",
+    "motif": "crystal",
+    "radius": 8,
+    "heading": "sans",
+    "edge": "solid",
+    "description": "Faceted prisms, angular edges and precise violet light."
+  },
+  "rose": {
+    "label": "Pressed rose",
+    "motif": "flower",
+    "radius": 22,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Fine botanical stems and pressed rose silhouettes."
+  },
+  "crimson": {
+    "label": "Redline",
+    "motif": "race",
+    "radius": 8,
+    "heading": "mono",
+    "edge": "solid",
+    "description": "Racing stripes, track markings and compact technical type."
+  },
+  "sunset": {
+    "label": "Golden hour",
+    "motif": "sun",
+    "radius": 24,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "A setting sun above layered dune silhouettes."
+  },
+  "amber": {
+    "label": "Instrument",
+    "motif": "dial",
+    "radius": 10,
+    "heading": "mono",
+    "edge": "double",
+    "description": "Concentric brass gauges and etched instrument marks."
+  },
+  "emerald": {
+    "label": "Jade cut",
+    "motif": "crystal",
+    "radius": 6,
+    "heading": "sans",
+    "edge": "solid",
+    "description": "Cut gemstone facets and crisp architectural edges."
+  },
+  "forest": {
+    "label": "Woodland",
+    "motif": "forest",
+    "radius": 18,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Layered woodland silhouettes and etched leaf details."
+  },
+  "teal": {
+    "label": "Topography",
+    "motif": "contour",
+    "radius": 20,
+    "heading": "mono",
+    "edge": "solid",
+    "description": "Survey contours and fine topographic linework."
+  },
+  "ocean": {
+    "label": "Tidal",
+    "motif": "waves",
+    "radius": 26,
+    "heading": "sans",
+    "edge": "solid",
+    "description": "Layered wave crests, bubbles and sea-glass curves."
+  },
+  "graphite": {
+    "label": "Machine shop",
+    "motif": "machine",
+    "radius": 6,
+    "heading": "mono",
+    "edge": "solid",
+    "description": "Machined frames, rivets and calibrated grid details."
+  },
+  "nord": {
+    "label": "Alpine",
+    "motif": "mountain",
+    "radius": 12,
+    "heading": "sans",
+    "edge": "solid",
+    "description": "Polar mountain ridges and snowy geometric peaks."
+  },
+  "mocha": {
+    "label": "Cafe ledger",
+    "motif": "coffee",
+    "radius": 18,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Coffee-ring impressions and a warm cafe ledger."
+  },
+  "sakura": {
+    "label": "Hanami",
+    "motif": "flower",
+    "radius": 24,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Cherry branches, drifting petal shapes and soft curves."
+  },
+  "pearl": {
+    "label": "Porcelain",
+    "motif": "arches",
+    "radius": 28,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Porcelain arches and softly embossed circular inlays."
+  },
+  "lavender": {
+    "label": "Herbarium",
+    "motif": "leaves",
+    "radius": 22,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Delicate herb sprigs and a light botanical frame."
+  },
+  "mint": {
+    "label": "Conservatory",
+    "motif": "tiles",
+    "radius": 16,
+    "heading": "sans",
+    "edge": "solid",
+    "description": "Garden tiles, botanical insets and fresh structured panels."
+  },
+  "cobalt": {
+    "label": "Satellite",
+    "motif": "orbit",
+    "radius": 10,
+    "heading": "mono",
+    "edge": "solid",
+    "description": "Satellite reticles and sharp orbital coordinates."
+  },
+  "amethyst": {
+    "label": "Geode",
+    "motif": "crystal",
+    "radius": 16,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Crystal clusters and a gemstone-inspired frame."
+  },
+  "copper": {
+    "label": "Wireworks",
+    "motif": "circuit",
+    "radius": 10,
+    "heading": "mono",
+    "edge": "solid",
+    "description": "Copper traces, terminals and fine technical engraving."
+  },
+  "ruby": {
+    "label": "Deco club",
+    "motif": "deco",
+    "radius": 8,
+    "heading": "serif",
+    "edge": "double",
+    "description": "Art Deco fans and jewel-box double borders."
+  },
+  "lemon": {
+    "label": "Citrus press",
+    "motif": "citrus",
+    "radius": 24,
+    "heading": "sans",
+    "edge": "solid",
+    "description": "Citrus cross-sections and playful curved surfaces."
+  },
+  "sage": {
+    "label": "Botanical study",
+    "motif": "leaves",
+    "radius": 18,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Pressed foliage, fine stems and quiet field-book framing."
+  },
+  "glacier": {
+    "label": "Ice shelf",
+    "motif": "mountain",
+    "radius": 4,
+    "heading": "sans",
+    "edge": "solid",
+    "description": "Fractured ice ridges and sharp polar silhouettes."
+  },
+  "ink": {
+    "label": "Editorial",
+    "motif": "paper",
+    "radius": 2,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Editorial rules, an ink seal and precise square framing."
+  },
+  "coffee": {
+    "label": "Roastery",
+    "motif": "coffee",
+    "radius": 12,
+    "heading": "serif",
+    "edge": "double",
+    "description": "Roastery seals, coffee rings and a double-line frame."
+  },
+  "plum": {
+    "label": "Velvet room",
+    "motif": "waves",
+    "radius": 26,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Soft draped curves and layered velvet-like surfaces."
+  },
+  "neon": {
+    "label": "Circuit night",
+    "motif": "circuit",
+    "radius": 4,
+    "heading": "mono",
+    "edge": "solid",
+    "description": "Circuit traces, terminal details and sharp neon geometry."
+  },
+  "orchid": {
+    "label": "Orchid house",
+    "motif": "flower",
+    "radius": 28,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Oversized petal outlines and a rounded floral frame."
+  },
+  "terracotta": {
+    "label": "Courtyard",
+    "motif": "arches",
+    "radius": 24,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Mediterranean arches, clay layers and a sculpted sun."
+  },
+  "aurora": {
+    "label": "Northern lights",
+    "motif": "aurora",
+    "radius": 22,
+    "heading": "sans",
+    "edge": "solid",
+    "description": "Northern-light ribbons sweeping above a dark horizon."
+  },
+  "blueprint": {
+    "label": "Drafting board",
+    "motif": "blueprint",
+    "radius": 2,
+    "heading": "mono",
+    "edge": "dashed",
+    "description": "Drafting grids, dimension ticks and technical linework."
+  },
+  "sand": {
+    "label": "Desert atlas",
+    "motif": "contour",
+    "radius": 18,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Dune contours and a sun-marked atlas frame."
+  },
+  "blossom": {
+    "label": "Petal stationery",
+    "motif": "flower",
+    "radius": 24,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "Petal stationery with a flowering corner branch."
+  },
+  "ice": {
+    "label": "Frosted pane",
+    "motif": "snow",
+    "radius": 18,
+    "heading": "sans",
+    "edge": "solid",
+    "description": "Frost crystals, winter stars and cool beveled framing."
+  },
+  "halloween": {
+    "label": "Moonlit hollow",
+    "motif": "halloween",
+    "radius": 18,
+    "heading": "serif",
+    "edge": "solid",
+    "description": "A haunted moon, bare branches and glowing pumpkin silhouettes."
+  },
+  "christmas": {
+    "label": "Winter lodge",
+    "motif": "christmas",
+    "radius": 20,
+    "heading": "serif",
+    "edge": "double",
+    "description": "Snowy fir trees, hanging ornaments and warm festive framing."
+  }
+}

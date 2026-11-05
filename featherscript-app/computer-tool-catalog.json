@@ -1,0 +1,2549 @@
+[
+  {
+    "name": "pc_file_hash",
+    "description": "Compute a bounded file hash (maximum 64 MB).",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "algorithm": {
+          "type": "string",
+          "enum": [
+            "sha256",
+            "sha512",
+            "sha1",
+            "md5"
+          ]
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_compare_files",
+    "description": "Compare file contents and hashes; each file must be at most 64 MB.",
+    "access": "read",
+    "paths": [
+      "source",
+      "destination"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "destination": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "source",
+        "destination"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_file_head",
+    "description": "Read the first lines of a UTF-8 file, up to 1 MB.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "lines": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2000
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_file_tail",
+    "description": "Read the last lines of a UTF-8 file, up to 1 MB.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "lines": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2000
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_find_text",
+    "description": "Find literal text in one UTF-8 file with line numbers and bounded matches.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 1
+        },
+        "caseSensitive": {
+          "type": "boolean"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "required": [
+        "path",
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_replace_text",
+    "description": "Replace exact text in an existing UTF-8 file atomically. expectedOccurrences prevents unintended edits.",
+    "access": "write",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "oldText": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 1
+        },
+        "newText": {
+          "type": "string",
+          "maxLength": 1048576
+        },
+        "expectedOccurrences": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      },
+      "required": [
+        "path",
+        "oldText",
+        "newText",
+        "expectedOccurrences"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_insert_lines",
+    "description": "Insert UTF-8 text before a 1-based line in an existing file; EOF+1 appends.",
+    "access": "write",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 1048576
+        }
+      },
+      "required": [
+        "path",
+        "line",
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_delete_lines",
+    "description": "Delete an inclusive 1-based line range from an existing UTF-8 file.",
+    "access": "write",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "startLine": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "endLine": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        }
+      },
+      "required": [
+        "path",
+        "startLine",
+        "endLine"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_detect_encoding",
+    "description": "Detect UTF BOMs, valid UTF-8 or unknown/binary data in a file of at most 1 MB.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_directory_summary",
+    "description": "Summarize file counts, sizes and extensions; skips links and caps traversal at 5,000 entries.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_directory_tree",
+    "description": "Read a bounded directory tree with relative paths; skips links.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_find_duplicates",
+    "description": "Find identical files under a directory by size and SHA-256. Hashes at most 128 MB total.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_json_read",
+    "description": "Read a JSON document as structured data, up to 1 MB.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_json_format",
+    "description": "Return formatted JSON text without changing the source file.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "indent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_json_validate",
+    "description": "Validate JSON syntax; reports parse errors without changing the file.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_json_query",
+    "description": "Read a JSON Pointer (RFC 6901); an empty pointer selects the document.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "pointer": {
+          "type": "string",
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "path",
+        "pointer"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_json_set",
+    "description": "Atomically set a JSON Pointer value; the parent must exist. Empty pointer replaces the document.",
+    "access": "write",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "pointer": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "value": {
+          "type": [
+            "object",
+            "array",
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "pointer",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_json_delete",
+    "description": "Atomically remove a JSON Pointer key or array element; cannot delete the document root.",
+    "access": "write",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "pointer": {
+          "type": "string",
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "path",
+        "pointer"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_json_merge",
+    "description": "Atomically deep-merge an object into a JSON document; arrays are replaced.",
+    "access": "write",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "value": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "path",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_json_diff",
+    "description": "Compare two JSON files structurally and return up to 500 changed JSON Pointers.",
+    "access": "read",
+    "paths": [
+      "source",
+      "destination"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "destination": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "source",
+        "destination"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_csv_preview",
+    "description": "Read raw CSV headers and a bounded row preview; supports quoted fields and multiline cells.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_csv_info",
+    "description": "Report CSV shape, headers and ragged-row counts; maximum 20,000 rows and 256 columns.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_csv_filter",
+    "description": "Return CSV rows matching a literal column filter; does not modify the file.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "column": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "operator": {
+          "type": "string",
+          "enum": [
+            "equals",
+            "contains",
+            "startsWith",
+            "endsWith",
+            "gt",
+            "lt"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "required": [
+        "path",
+        "column",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_csv_sort",
+    "description": "Return CSV rows sorted by a named column; leaves the source unchanged.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "column": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "descending": {
+          "type": "boolean"
+        },
+        "numeric": {
+          "type": "boolean"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "required": [
+        "path",
+        "column"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_csv_select_columns",
+    "description": "Return selected CSV columns in the requested order without changing the file.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "minItems": 1,
+          "maxItems": 256
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "required": [
+        "path",
+        "columns"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_csv_to_json",
+    "description": "Convert CSV rows to JSON objects with unique headers; returns a bounded preview.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_json_to_csv",
+    "description": "Convert a JSON array of flat objects to CSV text without writing a file.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "minItems": 1,
+          "maxItems": 256
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_status",
+    "description": "Read repository short status, including branch and untracked files. Runs Git read-only with hooks/fsmonitor/external diff disabled.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_diff",
+    "description": "Read a bounded Git diff with external diff/textconv disabled. Runs Git read-only with hooks/fsmonitor/external diff disabled.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "staged": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_log",
+    "description": "Read recent commit hashes, dates and subjects. Runs Git read-only with hooks/fsmonitor/external diff disabled.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_branches",
+    "description": "List local branches and their current commit. Runs Git read-only with hooks/fsmonitor/external diff disabled.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_remotes",
+    "description": "Read configured Git remote URLs without contacting them. Runs Git read-only with hooks/fsmonitor/external diff disabled.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_show_file",
+    "description": "Read a repository-relative file at a revision; no external textconv. Runs Git read-only with hooks/fsmonitor/external diff disabled.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "file": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "revision": {
+          "type": "string",
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "path",
+        "file"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_ls_files",
+    "description": "List tracked repository files. Runs Git read-only with hooks/fsmonitor/external diff disabled.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_blame",
+    "description": "Read bounded line attribution for a repository-relative file. Runs Git read-only with hooks/fsmonitor/external diff disabled.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "file": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "startLine": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "lines": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "required": [
+        "path",
+        "file"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_stash_list",
+    "description": "Read stash names and subjects without applying anything. Runs Git read-only with hooks/fsmonitor/external diff disabled.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_tags",
+    "description": "List up to 500 local tags. Runs Git read-only with hooks/fsmonitor/external diff disabled.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_head",
+    "description": "Read the current commit and repository root. Runs Git read-only with hooks/fsmonitor/external diff disabled.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_check_ignore",
+    "description": "Explain ignore rules for one repository-relative path. Runs Git read-only with hooks/fsmonitor/external diff disabled.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "file": {
+          "type": "string",
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "path",
+        "file"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_text_stats",
+    "description": "Count UTF-8 lines, words, characters, bytes and newline styles in a bounded file.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_text_normalize",
+    "description": "Return normalized line endings and optional trailing-space removal; source remains unchanged.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "newline": {
+          "type": "string",
+          "enum": [
+            "lf",
+            "crlf"
+          ]
+        },
+        "trimTrailingSpace": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_text_duplicate_lines",
+    "description": "Find repeated nonempty lines with bounded counts and line numbers.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "caseSensitive": {
+          "type": "boolean"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_markdown_headings",
+    "description": "Extract Markdown ATX and setext headings outside fenced code blocks with line numbers.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_file_byte_sample",
+    "description": "Read a bounded binary slice as hexadecimal and base64.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1073741824
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_directory_recent_files",
+    "description": "List recently modified files under a directory, skipping links.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_file_exists",
+    "description": "Check whether a path exists and report its type and size without failing when absent.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "allowMissing": true
+  },
+  {
+    "name": "pc_file_lines",
+    "description": "Read an inclusive 1-based line range from a UTF-8 file.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "startLine": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000000,
+          "default": 1,
+          "description": "First line (1-based)."
+        },
+        "endLine": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000000,
+          "default": 200,
+          "description": "Last line (inclusive)."
+        },
+        "maxLines": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5000,
+          "default": 500,
+          "description": "Hard cap on returned lines."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_text_between",
+    "description": "Extract the text between the first start marker and the following end marker.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "start": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Opening marker text."
+        },
+        "end": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Closing marker text."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200000,
+          "default": 20000,
+          "description": "Maximum characters returned."
+        }
+      },
+      "required": [
+        "path",
+        "start",
+        "end"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_search_text",
+    "description": "Search text inside files under a folder. Skips binary files, links and oversized files.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Text to find."
+        },
+        "caseSensitive": {
+          "type": "boolean",
+          "description": "Match case exactly."
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8,
+          "default": 4,
+          "description": "Folder depth to scan."
+        },
+        "maxFiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 200,
+          "description": "Maximum files read."
+        },
+        "maxMatches": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 100,
+          "description": "Maximum matching lines returned."
+        }
+      },
+      "required": [
+        "path",
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_find_largest_files",
+    "description": "List the largest files under a folder, with a minimum byte filter.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8,
+          "default": 4,
+          "description": "Folder depth to scan."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 50,
+          "description": "Maximum files returned."
+        },
+        "minBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000,
+          "default": 0,
+          "description": "Skip files smaller than this."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_list_extensions",
+    "description": "Count files and bytes per extension under a folder.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8,
+          "default": 4,
+          "description": "Folder depth to scan."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_disk_space",
+    "description": "Report total, free and available bytes for the volume holding a path.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_env_vars",
+    "description": "List environment variable names, optionally with values. Values may contain secrets, so this always asks in unusual mode.",
+    "access": "read",
+    "paths": [],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Case-insensitive substring for variable names."
+        },
+        "includeValues": {
+          "type": "boolean",
+          "description": "Include values (may contain secrets)."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2000,
+          "default": 200,
+          "description": "Maximum variables returned."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_which",
+    "description": "Resolve a command name against PATH and report matching executables.",
+    "access": "read",
+    "paths": [],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "Command name, without arguments."
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_network_interfaces",
+    "description": "List local network interfaces and addresses.",
+    "access": "read",
+    "paths": [],
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_process_list",
+    "description": "List running processes (pid and name), bounded and filtered.",
+    "access": "read",
+    "paths": [],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Case-insensitive substring for the process name."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 100,
+          "description": "Maximum processes returned."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_dns_lookup",
+    "description": "Resolve a hostname to its addresses.",
+    "access": "read",
+    "paths": [],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "hostname": {
+          "type": "string",
+          "maxLength": 253,
+          "description": "Hostname to resolve."
+        }
+      },
+      "required": [
+        "hostname"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_port_probe",
+    "description": "Check whether a TCP port accepts connections on a host.",
+    "access": "read",
+    "paths": [],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string",
+          "maxLength": 253,
+          "description": "Hostname or IP address."
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "TCP port."
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 200,
+          "maximum": 10000,
+          "default": 3000,
+          "description": "Connection timeout."
+        }
+      },
+      "required": [
+        "host",
+        "port"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_http_get",
+    "description": "Fetch an http(s) URL as UTF-8 text with redirects, size and time bounds. Always considered unusual.",
+    "access": "read",
+    "paths": [],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "maxLength": 2048,
+          "description": "Full http or https URL."
+        },
+        "maxBytes": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 1048576,
+          "default": 262144,
+          "description": "Maximum body bytes."
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 20000,
+          "default": 10000,
+          "description": "Request timeout."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_regex_extract",
+    "description": "Run a bounded regular expression against a file and return matches and capture groups.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "pattern": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "JavaScript regular expression source."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 100,
+          "description": "Maximum matches returned."
+        }
+      },
+      "required": [
+        "path",
+        "pattern"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_markdown_links",
+    "description": "List inline and automatic links from a Markdown file, ignoring fenced code.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 100,
+          "description": "Maximum links returned."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_markdown_toc",
+    "description": "Build a Markdown table of contents from a file's headings, ignoring fenced code.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 200,
+          "description": "Maximum headings returned."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_json_paths",
+    "description": "List every JSON Pointer in a document with its value type.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5000,
+          "default": 500,
+          "description": "Maximum pointers returned."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_json_flatten",
+    "description": "Flatten a JSON document to pointer/value pairs for scalar leaves.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5000,
+          "default": 500,
+          "description": "Maximum leaves returned."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_csv_group",
+    "description": "Group CSV rows by a column and aggregate a numeric column.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "column": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Column to group by."
+        },
+        "valueColumn": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Numeric column for sum/average/min/max."
+        },
+        "aggregate": {
+          "type": "string",
+          "enum": [
+            "count",
+            "sum",
+            "average",
+            "min",
+            "max"
+          ]
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000,
+          "default": 100,
+          "description": "Maximum groups returned."
+        }
+      },
+      "required": [
+        "path",
+        "column",
+        "aggregate"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_csv_distinct",
+    "description": "List distinct values and counts for one CSV column.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "column": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Column name."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000,
+          "default": 100,
+          "description": "Maximum distinct values returned."
+        }
+      },
+      "required": [
+        "path",
+        "column"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_csv_row_lookup",
+    "description": "Find CSV rows where a column equals or contains a value.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "column": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Column name."
+        },
+        "value": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Text to compare."
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "equals",
+            "contains"
+          ]
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 100,
+          "description": "Maximum rows returned."
+        }
+      },
+      "required": [
+        "path",
+        "column",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_diff_files",
+    "description": "Compare two UTF-8 files line by line and report changed regions.",
+    "access": "read",
+    "paths": [
+      "source",
+      "destination"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "destination": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "context": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20,
+          "default": 3,
+          "description": "Context lines around a change."
+        },
+        "maxLines": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2000,
+          "default": 400,
+          "description": "Lines compared per file."
+        }
+      },
+      "required": [
+        "source",
+        "destination"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_text_replace_regex",
+    "description": "Replace regular-expression matches in a file atomically, requiring the expected match count.",
+    "access": "write",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "pattern": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "JavaScript regular expression source."
+        },
+        "replacement": {
+          "type": "string",
+          "maxLength": 100000,
+          "description": "Replacement text ($1 groups supported)."
+        },
+        "flags": {
+          "type": "string",
+          "maxLength": 5,
+          "description": "Flags from gimsuy (g is implied)."
+        },
+        "expectedOccurrences": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000,
+          "description": "Exact number of matches required."
+        }
+      },
+      "required": [
+        "path",
+        "pattern",
+        "replacement",
+        "expectedOccurrences"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_text_sort_lines",
+    "description": "Sort the lines of a file in place atomically.",
+    "access": "write",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "descending": {
+          "type": "boolean",
+          "description": "Sort descending."
+        },
+        "caseSensitive": {
+          "type": "boolean",
+          "description": "Compare case-sensitively."
+        },
+        "unique": {
+          "type": "boolean",
+          "description": "Drop duplicate lines."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_text_dedupe_lines",
+    "description": "Remove duplicate lines in place, keeping the first occurrence.",
+    "access": "write",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "caseSensitive": {
+          "type": "boolean",
+          "description": "Treat differently-cased lines as duplicates."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_json_merge_into",
+    "description": "Deep-merge one JSON document into another and write the destination atomically.",
+    "access": "write",
+    "paths": [
+      "source",
+      "destination"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "destination": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "source",
+        "destination"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_write_bytes",
+    "description": "Replace an existing file with decoded base64 bytes, up to 2 MB.",
+    "access": "write",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "base64": {
+          "type": "string",
+          "maxLength": 2097152,
+          "description": "Base64-encoded content."
+        }
+      },
+      "required": [
+        "path",
+        "base64"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_touch_path",
+    "description": "Update a path's access and modification times to now.",
+    "access": "write",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_truncate_file",
+    "description": "Truncate an existing file to a smaller byte length.",
+    "access": "write",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 67108864,
+          "description": "New length in bytes; must be smaller than the current size."
+        }
+      },
+      "required": [
+        "path",
+        "bytes"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_remove_empty_directory",
+    "description": "Remove a directory only when it is empty.",
+    "access": "write",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_show_commit",
+    "description": "Show one commit with metadata and a diffstat.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "revision": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Commit or rev, e.g. HEAD or a hash."
+        }
+      },
+      "required": [
+        "path",
+        "revision"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_reflog",
+    "description": "List recent HEAD reflog entries.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 50,
+          "description": "Maximum entries."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_config",
+    "description": "List effective Git configuration with origins.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 200,
+          "description": "Maximum lines."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_worktrees",
+    "description": "List the repository worktrees in porcelain form.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_count_objects",
+    "description": "Report repository object and pack counts.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_ahead_behind",
+    "description": "Compare a revision with its upstream and report ahead/behind counts.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "revision": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Local revision; defaults to HEAD."
+        },
+        "upstream": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Upstream revision; defaults to @{upstream}."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_shortlog",
+    "description": "Summarise commit counts per author.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5000,
+          "default": 200,
+          "description": "Maximum commits considered."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_ls_tree",
+    "description": "List every tracked file at a revision.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "revision": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Revision; defaults to HEAD."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "pc_git_grep",
+    "description": "Search tracked files with Git grep, bounded by max-count.",
+    "access": "read",
+    "paths": [
+      "path"
+    ],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096,
+          "description": "Absolute local path."
+        },
+        "pattern": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Pattern to search for."
+        },
+        "fixed": {
+          "type": "boolean",
+          "description": "Treat the pattern as a fixed string."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "default": 100,
+          "description": "Maximum matches per file."
+        }
+      },
+      "required": [
+        "path",
+        "pattern"
+      ],
+      "additionalProperties": false
+    }
+  }
+]
